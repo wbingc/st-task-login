@@ -3,6 +3,8 @@ package com.example.Login.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 //https://www.tutorialspoint.com/java_cryptography/java_cryptography_message_digest.htm
@@ -11,6 +13,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Utils {
 	
+	final static Logger LOGGER = LogManager.getLogger();
+	
+	/***
+	 * Supporting function to generate a hash for Input String
+	 * @author wbing
+	 * @param plaintext
+	 * @return String digest
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String digest(String plaintext) throws NoSuchAlgorithmException{
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(plaintext.getBytes());
@@ -22,5 +33,26 @@ public class Utils {
 			hexString.append(Integer.toHexString(0xFF & digest[i]));
 		}
 		return hexString.toString();
+	}
+	
+	/***
+	 * Validate Stored Password Hash with Input Password
+	 * @author wbing
+	 * @param originalPassword
+	 * @param token
+	 * @param password
+	 * @return boolean result
+	 */
+	public static boolean validate(String originalPassword, String token, String password) {		
+		try {
+			String loginPw = Utils.digest(token.concat(password));
+			
+			if(!originalPassword.equals(loginPw))
+				return false;
+		} catch (NoSuchAlgorithmException e) {
+			LOGGER.error("Unable to compute hash of password.");
+		}
+		
+		return true;
 	}
 }

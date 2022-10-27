@@ -57,6 +57,18 @@ public class LoginController {
 		}
 	}
 	
+	@PostMapping("/hello")
+	public ResponseEntity<String> sayHello(@RequestBody User user) {
+		try {
+			String result = loginService.sayHello(user);
+			return ResponseEntity.ok().body(result);
+		} catch (UsersNotFoundException e) {
+			return ResponseEntity.badRequest().body("No user record found.");
+		} catch (IllegalStateException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
 	@GetMapping("/user/{email}")
 	public ResponseEntity<User> getByEmail(@PathVariable("email") String email) {
 		try {

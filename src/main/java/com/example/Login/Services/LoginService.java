@@ -111,16 +111,30 @@ public class LoginService {
 		Optional<User> result = userMapper.getUser(user.getEmail());
 		result.orElseThrow(UsersNotFoundException::new);
 		
-		try {
-			LOGGER.info("Verifying User : " + result.get().getEmail());
-			String loginPw = Utils.digest(result.get().getUuid().concat(result.get().getPassword()));
-			
-			if(!result.get().getPassword().equals(loginPw))
-				throw new IllegalStateException("Credentials Mismatch.");
-		} catch (NoSuchAlgorithmException e) {
-			LOGGER.error("Unable to compute hash of password.");
-		}
+		boolean valid = Utils.validate(result.get().getPassword(), result.get().getUuid(), user.getPassword());
+		if(!valid) throw new IllegalStateException("Credentials Mismatch.");
 		
 		return result.get().getUuid().toString();
+	}
+	
+	/***
+	 * Testing endpoint that validates token before returning the result
+	 * @author wbing
+	 * @param user
+	 * @return String str
+	 * @throws UsersNotFoundException
+	 */
+	public String sayHello(User user) throws UsersNotFoundException {
+		if(user == null) 
+			throw new IllegalArgumentException("Invalid Argument.");
+		
+		//check if user exist
+		Optional<User> result = userMapper.getUser(user.getEmail());
+		result.orElseThrow(UsersNotFoundException::new);
+				
+		boolean valid = Utils.validate(result.get().getPassword(), result.get().getUuid(), user.getPassword());
+		if(!valid) throw new IllegalStateException("Invalid Token.");
+		else
+			return "Hello World";
 	}
 }
