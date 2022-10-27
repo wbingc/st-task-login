@@ -9,6 +9,14 @@ spring:
           enabled: true
   application:
     name: login-service
+  datasource:
+    url: jdbc:h2:C:/data/sampledata
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
 
 eureka:
   client:
@@ -17,6 +25,3 @@ eureka:
   instance:
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 30
-    
-jwt:
-  password: password
