@@ -1,7 +1,6 @@
 package com.example.Login.Entity;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
@@ -10,7 +9,7 @@ public class User {
 
 	private String email;
 	private String password;
-	private UUID uuid;
+	private String uuid;
 
 	public User() {};
 
@@ -30,11 +29,11 @@ public class User {
 		this.password = password;
 	}
 	
-	public UUID getUuid() {
+	public String getUuid() {
 		return uuid;
 	}
 
-	public void setUuid(UUID uuid) {
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 

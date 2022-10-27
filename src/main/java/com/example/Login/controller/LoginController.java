@@ -33,11 +33,10 @@ public class LoginController {
 		try {
 			String token = loginService.login(user);
 			return ResponseEntity.ok().body(token);
-			//return ResponseEntity.ok().body("Welcome back, " + authentication.getName());
 		} catch (UsersNotFoundException e) {
 			return ResponseEntity.badRequest().body("No user record found.");
 		} catch (IllegalStateException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+			return ResponseEntity.badRequest().body("Email Address is already in used.");
 		}
 	}
 	
@@ -52,7 +51,7 @@ public class LoginController {
 	public ResponseEntity<String> register(@RequestBody User user) {
 		try {
 			loginService.register(user);
-			return ResponseEntity.ok().body("User: " + user.getEmail() + " registered."); //shld be 201
+			return ResponseEntity.ok().body("User: " + user.getEmail() + " registered.");
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().body("Email Address is already in used.");
 		}
@@ -68,10 +67,10 @@ public class LoginController {
 		}
 	}
 	
-	@GetMapping("/test/all") 
+	@GetMapping("/user/all") 
 	public ResponseEntity<List<User>> listAll() {
 		try {
-			return ResponseEntity.ok(loginService.listUsers());
+			return ResponseEntity.ok(loginService.getAllUsers());
 		} catch (UsersNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
