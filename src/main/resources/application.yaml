@@ -1,0 +1,22 @@
+server:
+ port: 8080
+
+spring:
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: true
+  application:
+    name: login-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8082/eureka
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    
+jwt:
+  password: password
