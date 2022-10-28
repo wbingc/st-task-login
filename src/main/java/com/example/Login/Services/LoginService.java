@@ -39,7 +39,7 @@ public class LoginService {
 		
 		//check if user exist
 		Optional<User> result = userRepo.findById(user.getEmail());
-		if(result.get() != null) throw new IllegalStateException("Email Address is already in used.");
+		if(!result.isEmpty()) throw new IllegalStateException("Email Address is already in used.");
 		
 		UUID uuid = UUID.randomUUID();
 		user.setUuid(uuid.toString());
@@ -50,6 +50,8 @@ public class LoginService {
 		} catch (NoSuchAlgorithmException e) {
 			LOGGER.error("Unable to compute hash of password.");
 		}
+		LOGGER.info("Registering User : " + user.getEmail());
+		
 		return userRepo.save(user);
 	}
 	

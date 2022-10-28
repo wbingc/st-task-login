@@ -1,12 +1,12 @@
 package com.example.Login.Repository;
 
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import com.example.Login.Entity.User;
 
 
-@Repository
+@EnableRedisRepositories
 public interface UserRepository extends CrudRepository<User, String> {
 
 }

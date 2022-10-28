@@ -28,6 +28,11 @@ public class LoginController {
 		this.loginService = loginService;
 	}
 
+	@GetMapping("/test")
+	public String test() {
+		return "YES!";
+	}
+	
 	@PostMapping("/auth/login")
 	public ResponseEntity<String> login(@RequestBody User user) {
 		try {

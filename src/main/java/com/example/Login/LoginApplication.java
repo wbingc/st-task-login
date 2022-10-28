@@ -10,7 +10,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 /**
 @MapperScan("com.example.Login")
 @MappedTypes(User.class)
-@EnableAutoConfiguration
 **/
 
 public class LoginApplication {
