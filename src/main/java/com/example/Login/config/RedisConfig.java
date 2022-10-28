@@ -1,4 +1,4 @@
-package com.example.Login.utils;
+package com.example.Login.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +7,7 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
@@ -33,6 +34,15 @@ public class RedisConfig {
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(jedisConnectFactory());
+		return template;
+	}
+	
+	//For session
+	@Bean(name="sessionTemplate")
+	public RedisTemplate<String,String> redisSessionTemplate() {
+		RedisTemplate<String,String> template = new RedisTemplate<>();
+		template.setConnectionFactory(jedisConnectFactory());
+		template.setDefaultSerializer(new StringRedisSerializer());
 		return template;
 	}
 

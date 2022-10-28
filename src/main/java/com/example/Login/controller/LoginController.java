@@ -27,11 +27,6 @@ public class LoginController {
 	public LoginController(LoginService loginService) {
 		this.loginService = loginService;
 	}
-
-	@GetMapping("/test")
-	public String test() {
-		return "YES!";
-	}
 	
 	@PostMapping("/auth/login")
 	public ResponseEntity<String> login(@RequestBody User user) {
@@ -62,6 +57,7 @@ public class LoginController {
 		}
 	}
 	
+	//require authentication
 	@PostMapping("/hello")
 	public ResponseEntity<String> sayHello(@RequestBody User user) {
 		try {
