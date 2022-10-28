@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Login.Entity.Session;
 import com.example.Login.Entity.User;
 import com.example.Login.Services.LoginService;
 import com.example.Login.utils.UsersNotFoundException;
@@ -50,8 +51,8 @@ public class LoginController {
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> register(@RequestBody User user) {
 		try {
-			loginService.register(user);
-			return ResponseEntity.ok().body("User: " + user.getEmail() + " registered.");
+			User result = loginService.register(user);
+			return ResponseEntity.ok().body("User: " + result.getEmail() + " registered.");
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().body("Email Address is already in used.");
 		}
@@ -60,14 +61,7 @@ public class LoginController {
 	//require authentication
 	@PostMapping("/hello")
 	public ResponseEntity<String> sayHello(@RequestBody User user) {
-		try {
-			String result = loginService.sayHello(user);
-			return ResponseEntity.ok().body(result);
-		} catch (UsersNotFoundException e) {
-			return ResponseEntity.badRequest().body("No user record found.");
-		} catch (IllegalStateException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+		return ResponseEntity.ok().body("Hello World!");
 	}
 	
 	@GetMapping("/user/{email}")
@@ -87,5 +81,16 @@ public class LoginController {
 		} catch (UsersNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	@GetMapping("/session/all")
+	public ResponseEntity<List<Session>> listAllSession() {
+		return ResponseEntity.ok(loginService.getAllSession());
+	}
+	
+	@PostMapping("/user/delete")
+	public ResponseEntity<String> deleteUser(@RequestBody User user) {
+		loginService.deleteUser(user);
+		return ResponseEntity.ok().body(user.getEmail() + " is deleted.");
 	}
 }

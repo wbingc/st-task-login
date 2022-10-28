@@ -36,7 +36,7 @@ public class RedisConfig {
 		template.setConnectionFactory(jedisConnectFactory());
 		return template;
 	}
-	
+
 	//For session
 	@Bean(name="sessionTemplate")
 	public RedisTemplate<String,String> redisSessionTemplate() {
@@ -45,5 +45,4 @@ public class RedisConfig {
 		template.setDefaultSerializer(new StringRedisSerializer());
 		return template;
 	}
-
 }

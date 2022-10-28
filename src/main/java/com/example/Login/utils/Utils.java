@@ -39,13 +39,12 @@ public class Utils {
 	 * Validate Stored Password Hash with Input Password
 	 * @author wbing
 	 * @param originalPassword
-	 * @param token
 	 * @param password
 	 * @return boolean result
 	 */
-	public static boolean validate(String originalPassword, String token, String password) {		
+	public static boolean validate(String originalPassword, String password) {		
 		try {
-			String loginPw = Utils.digest(token.concat(password));
+			String loginPw = Utils.digest(password);
 			
 			if(!originalPassword.equals(loginPw))
 				return false;

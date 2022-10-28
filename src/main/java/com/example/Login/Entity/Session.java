@@ -1,16 +1,20 @@
 package com.example.Login.Entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 @RedisHash("Session")
 public class Session implements Serializable {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
+	@Indexed
 	private String token;
 	
 	@Id
@@ -24,10 +28,6 @@ public class Session implements Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	public String getEmail() {
-		return email;
 	}
 
 	public void setEmail(String email) {

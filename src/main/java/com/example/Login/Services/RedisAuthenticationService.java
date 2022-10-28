@@ -31,13 +31,12 @@ public class RedisAuthenticationService {
 	@Qualifier("sessionTemplate") private RedisTemplate<String, String> redis;
 	
 	private enum Role {
-		USER,
-		ADMIN
+		USER
 	}
 	
 	/***
 	 * Returns the newly created Authentication obj
-	 * @param HttpServletRequest request
+	 * @param  request HttpServletRequest
 	 * @return Optional<Authentication> authentication
 	 */
 	public Optional<Authentication> authenticate(HttpServletRequest request) {
@@ -46,12 +45,14 @@ public class RedisAuthenticationService {
 	
 	/***
 	 * Creates an authentication obj from token
-	 * @param String token
+	 * @param token String token
 	 * @return Optional<Authentication> authentication
 	 */
 	private Optional<Authentication> lookup(String token) {
+		LOGGER.info("Lookup : " + token);
 		String email = this.redis.opsForValue().get(token);
 		if(email != null) {
+			LOGGER.info("Creating authentication for : " + email);
 			Authentication authentication = create(email, Role.USER);
 			return Optional.of(authentication);
 		}
@@ -60,11 +61,12 @@ public class RedisAuthenticationService {
 	
 	/***
 	 * To extract token string value from http header
-	 * @param HttpServletRequest request
+	 * @param request HttpServletRequest
 	 * @return Optional<String> token
 	 */
-	private static Optional<String> extractToken(HttpServletRequest request) {
+	private Optional<String> extractToken(HttpServletRequest request) {
 		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+		LOGGER.info("What's in my header : " + authorization);
 		if(authorization != null) {
 			if(authorization.startsWith(BEARER_PREFIX)) {
 				String token = authorization.substring(BEARER_PREFIX.length()).trim();
@@ -76,19 +78,18 @@ public class RedisAuthenticationService {
 	
 	/***
 	 * Create a new Authentication obj.
-	 * @param String email
-	 * @param Role roles
-	 * @return Authentication authentication
+	 * @param email String email
+	 * @param roles Role
+	 * @return authentication Authentication
 	 */
-	private static Authentication create(String email, Role roles) {
-		String name = email;
-		if(email == null) name = "N/A";
+	private Authentication create(String email, Role roles) {
+		LOGGER.info("Creating Token");
+		if(email.isEmpty()) email = "N/A";
 		
 		List<GrantedAuthority> authorities = Stream.of(roles)
-				.distinct()
 				.map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
 				.collect(Collectors.toList());
-		return new UsernamePasswordAuthenticationToken(name, "N/A", authorities);
+		return new UsernamePasswordAuthenticationToken(email, "N/A", authorities);
 	}
 
 }
