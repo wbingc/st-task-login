@@ -1,13 +1,19 @@
 package com.example.Login.Entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
-@EntityScan
-public class User {
+@RedisHash("Users")
+public class User implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
+	@Id
 	private String email;
+	
 	private String password;
 	private String uuid;
 
@@ -42,12 +48,6 @@ public class User {
 		return new String("User[email:\"" + this.email + "\", password:\"" + this.password + "\"]");
 	}
 	
-	/***
-	public String toString() {
-		return new String("User[email:\"" + this.email + "\", password:\"" + this.password + "\", UUID:\"" + this.uuid + "\"]");
-	}
-	***/
-	
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
@@ -62,6 +62,5 @@ public class User {
 	public int hashCode() {
 		return Objects.hash(this.email, this.password);
 	}
-	
-	
+
 }

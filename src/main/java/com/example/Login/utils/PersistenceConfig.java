@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+//Try to use embedded db but kinda failed
+
 @Configuration
 public class PersistenceConfig {
 	

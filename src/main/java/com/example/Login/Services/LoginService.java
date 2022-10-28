@@ -11,60 +11,58 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Login.Entity.User;
-import com.example.Login.Repository.UserMapper;
+import com.example.Login.Repository.UserRepository;
 import com.example.Login.utils.UsersNotFoundException;
 import com.example.Login.utils.Utils;
 
 @Service
 public class LoginService {
-	
+
 	final Logger LOGGER = LogManager.getLogger(getClass());
 	
-	private UserMapper userMapper;
+	private UserRepository userRepo;
 	
 	@Autowired
-	public LoginService(UserMapper userMapper) {
-		this.userMapper = userMapper;
+	public LoginService(UserRepository userRepo) {
+		this.userRepo = userRepo;
 	}
 	
 	/***
-	 * Insert User record into database.
-	 * @author Insert User record into database.
+	 * Insert user into database.
+	 * @author wbing
 	 * @param User user
-	 * @return User user
+	 * @return RedisUser user
 	 */
 	public User register(User user) {
-		LOGGER.debug("Inserting record into database.");
-		
 		if(user == null) 
 			throw new IllegalArgumentException("Invalid Argument.");
 		
 		//check if user exist
-		Optional<User> result = userMapper.getUser(user.getEmail());
-		result.orElseThrow(IllegalStateException::new);
+		Optional<User> result = userRepo.findById(user.getEmail());
+		if(result.get() != null) throw new IllegalStateException("Email Address is already in used.");
 		
 		UUID uuid = UUID.randomUUID();
 		user.setUuid(uuid.toString());
 		
 		try {
-			String hash = Utils.digest(result.get().getUuid().concat(result.get().getPassword()));
+			String hash = Utils.digest(uuid.toString().concat(user.getPassword()));
 			user.setPassword(hash);
 		} catch (NoSuchAlgorithmException e) {
 			LOGGER.error("Unable to compute hash of password.");
 		}
-		return userMapper.insertUser(user);
+		return userRepo.save(user);
 	}
-
+	
 	/***
 	 * Retrieve a single User record based on email address provided.
 	 * @author wbing
 	 * @param String email
-	 * @return User user
+	 * @return RedisUser user
 	 * @throws UsersNotFoundException 
 	 */
 	public User getUser(String email) throws UsersNotFoundException  {
 		LOGGER.debug("Retrieving user from database.");
-		Optional<User> result = userMapper.getUser(email);
+		Optional<User> result = userRepo.findById(email);
 		return result
 				.orElseThrow(UsersNotFoundException::new);
 	}
@@ -72,35 +70,41 @@ public class LoginService {
 	/***
 	 * Retrieve all User records from database.
 	 * @author wbing
-	 * @return List<User> users
+	 * @return List<RedisUser> users
 	 * @throws UsersNotFoundException 
 	 */
 	public List<User> getAllUsers() throws UsersNotFoundException {
 		LOGGER.debug("Retrieving users from database.");
-		Optional<List<User>> result = userMapper.getAllUser();
-		return result
-				.orElseThrow(UsersNotFoundException::new);
+		List<User> result = (List<User>) userRepo.findAll();
+		return result;
 	}
 	
 	/***
 	 * Update User record. 
 	 * @author wbing
 	 * @param User user
-	 * @return User user
+	 * @return RedisUser user
 	 * @throws UsersNotFoundException 
 	 */
 	public User updateUser(User user) throws UsersNotFoundException {
 		LOGGER.debug("Updating users from database.");
-		Optional<User> result = userMapper.updateUser(user);
-		return result
-				.orElseThrow(UsersNotFoundException::new);
+		
+		if(user == null) 
+			throw new IllegalArgumentException("Invalid Argument.");
+		
+		//check if user exist
+		Optional<User> result = userRepo.findById(user.getEmail());
+		result.orElseThrow(UsersNotFoundException::new);
+		
+		result.get().setEmail(user.getEmail());
+		return userRepo.save(result.get());
 	}
 	
 	/***
 	 * Verify if login user exist, if so, validate the password, else throw an exception.
 	 * @author wbing
 	 * @param User user
-	 * @return String token
+	 * @return RedisUser token
 	 * @throws UsersNotFoundException
 	 */
 	public String login(User user) throws UsersNotFoundException {
@@ -108,7 +112,7 @@ public class LoginService {
 			throw new IllegalArgumentException("Invalid Argument.");
 		
 		//check if user exist
-		Optional<User> result = userMapper.getUser(user.getEmail());
+		Optional<User> result = userRepo.findById(user.getEmail());
 		result.orElseThrow(UsersNotFoundException::new);
 		
 		boolean valid = Utils.validate(result.get().getPassword(), result.get().getUuid(), user.getPassword());
@@ -120,7 +124,7 @@ public class LoginService {
 	/***
 	 * Testing endpoint that validates token before returning the result
 	 * @author wbing
-	 * @param user
+	 * @param User
 	 * @return String str
 	 * @throws UsersNotFoundException
 	 */
@@ -129,7 +133,7 @@ public class LoginService {
 			throw new IllegalArgumentException("Invalid Argument.");
 		
 		//check if user exist
-		Optional<User> result = userMapper.getUser(user.getEmail());
+		Optional<User> result = userRepo.findById(user.getEmail());
 		result.orElseThrow(UsersNotFoundException::new);
 				
 		boolean valid = Utils.validate(result.get().getPassword(), result.get().getUuid(), user.getPassword());
