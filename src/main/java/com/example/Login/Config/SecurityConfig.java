@@ -53,13 +53,14 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.csrf(AbstractHttpConfigurer::disable)
-				.addFilterAt(this::authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.authorizeHttpRequests(auth -> auth
-						.mvcMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-						.mvcMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
-						.mvcMatchers(HttpMethod.POST, "/api/auth/fakelogin").permitAll()
-						.mvcMatchers(HttpMethod.POST, "/api/hello").authenticated()
+								.mvcMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+								//.mvcMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
+								//.mvcMatchers(HttpMethod.POST, "/api/auth/fakelogin").permitAll()
+								.mvcMatchers(HttpMethod.POST, "/api/hello").authenticated()
+								.mvcMatchers(HttpMethod.GET, "/api/user/**").permitAll()
 						)
+				.addFilterAt(this::authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.build();
 	}
@@ -77,7 +78,6 @@ public class SecurityConfig {
 	
 	private void authenticationFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		Optional<Authentication> authentication = this.redisAuthService.authenticate((HttpServletRequest)request);
-		LOGGER.info("Authentication Filter for : " + authentication.get().getName());
 		authentication.ifPresent(
 				SecurityContextHolder.getContext()::setAuthentication);
 		chain.doFilter(request, response);

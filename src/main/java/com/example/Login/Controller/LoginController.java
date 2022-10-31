@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,7 +67,8 @@ public class LoginController {
 	//require authentication
 	@PostMapping("/hello")
 	public ResponseEntity<String> sayHello() {
-		return ResponseEntity.ok().body("Hello World!");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return ResponseEntity.ok().body("Hello, " + authentication.getName());
 	}
 	
 	@GetMapping("/user/{email}")

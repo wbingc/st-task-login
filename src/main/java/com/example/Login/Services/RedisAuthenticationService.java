@@ -43,7 +43,7 @@ public class RedisAuthenticationService {
 	 * @return Optional<Authentication> authentication
 	 */
 	public Optional<Authentication> authenticate(HttpServletRequest request) {
-		LOGGER.info("In progress for authentication.");
+		LOGGER.debug("In progress for authentication.");
 		return extractToken(request).flatMap(this::lookup);
 	}
 	
@@ -56,7 +56,7 @@ public class RedisAuthenticationService {
 		LOGGER.info("Lookup : " + token);
 		Optional<Session> session = sessionRepo.findByToken(token);
 		if(session.isPresent()) {
-			LOGGER.info("Creating authentication for : " + session.get().getEmail());
+			LOGGER.debug("Creating authentication for : " + session.get().getEmail());
 			Authentication authentication = create(session.get().getEmail());
 			return Optional.of(authentication);
 		}
@@ -70,7 +70,7 @@ public class RedisAuthenticationService {
 	 */
 	private Optional<String> extractToken(HttpServletRequest request) {
 		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-		LOGGER.info("What's in my header : " + authorization);
+		LOGGER.debug("What's in my header : " + authorization);
 		if(authorization != null) {
 			if(authorization.startsWith(BEARER_PREFIX)) {
 				String token = authorization.substring(BEARER_PREFIX.length()).trim();
@@ -83,7 +83,7 @@ public class RedisAuthenticationService {
 	/***
 	 * Create a new Authentication obj.
 	 * @param email String email
-	 * @return authentication Authentication
+	 * @return authentication Authentication authentication
 	 */
 	private Authentication create(String email) {
 		if(email.isEmpty()) email = "N/A";
