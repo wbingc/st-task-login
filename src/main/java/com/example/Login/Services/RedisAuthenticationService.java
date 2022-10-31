@@ -7,11 +7,11 @@ import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.example.Login.Entity.Session;
+import com.example.Login.Repository.SessionRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,12 +26,15 @@ public class RedisAuthenticationService {
 	final Logger LOGGER = LogManager.getLogger(getClass());
 	
 	private static final String BEARER_PREFIX = "Bearer ";
-	
-	@Autowired
-	@Qualifier("sessionTemplate") private RedisTemplate<String, String> redis;
+	private final SessionRepository sessionRepo;
 	
 	private enum Role {
 		USER
+	}
+
+	@Autowired
+	public RedisAuthenticationService(SessionRepository sessionRepo) {
+		this.sessionRepo = sessionRepo;
 	}
 	
 	/***
@@ -40,6 +43,7 @@ public class RedisAuthenticationService {
 	 * @return Optional<Authentication> authentication
 	 */
 	public Optional<Authentication> authenticate(HttpServletRequest request) {
+		LOGGER.info("In progress for authentication.");
 		return extractToken(request).flatMap(this::lookup);
 	}
 	
@@ -50,10 +54,10 @@ public class RedisAuthenticationService {
 	 */
 	private Optional<Authentication> lookup(String token) {
 		LOGGER.info("Lookup : " + token);
-		String email = this.redis.opsForValue().get(token);
-		if(email != null) {
-			LOGGER.info("Creating authentication for : " + email);
-			Authentication authentication = create(email, Role.USER);
+		Optional<Session> session = sessionRepo.findByToken(token);
+		if(session.isPresent()) {
+			LOGGER.info("Creating authentication for : " + session.get().getEmail());
+			Authentication authentication = create(session.get().getEmail());
 			return Optional.of(authentication);
 		}
 		return Optional.empty();
@@ -79,14 +83,11 @@ public class RedisAuthenticationService {
 	/***
 	 * Create a new Authentication obj.
 	 * @param email String email
-	 * @param roles Role
 	 * @return authentication Authentication
 	 */
-	private Authentication create(String email, Role roles) {
-		LOGGER.info("Creating Token");
+	private Authentication create(String email) {
 		if(email.isEmpty()) email = "N/A";
-		
-		List<GrantedAuthority> authorities = Stream.of(roles)
+		List<GrantedAuthority> authorities = Stream.of(Role.USER)
 				.map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
 				.collect(Collectors.toList());
 		return new UsernamePasswordAuthenticationToken(email, "N/A", authorities);

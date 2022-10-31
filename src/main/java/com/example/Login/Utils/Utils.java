@@ -1,4 +1,4 @@
-package com.example.Login.utils;
+package com.example.Login.Utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

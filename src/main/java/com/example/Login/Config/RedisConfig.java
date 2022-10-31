@@ -1,4 +1,4 @@
-package com.example.Login.config;
+package com.example.Login.Config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,15 +34,6 @@ public class RedisConfig {
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
 		template.setConnectionFactory(jedisConnectFactory());
-		return template;
-	}
-
-	//For session
-	@Bean(name="sessionTemplate")
-	public RedisTemplate<String,String> redisSessionTemplate() {
-		RedisTemplate<String,String> template = new RedisTemplate<>();
-		template.setConnectionFactory(jedisConnectFactory());
-		template.setDefaultSerializer(new StringRedisSerializer());
 		return template;
 	}
 }

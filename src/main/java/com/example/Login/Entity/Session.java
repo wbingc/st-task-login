@@ -26,6 +26,8 @@ public class Session implements Serializable {
 		return token;
 	}
 
+	public String getEmail() {return email;}
+
 	public void setToken(String token) {
 		this.token = token;
 	}

@@ -1,4 +1,4 @@
-package com.example.Login.controller;
+package com.example.Login.Controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Login.Entity.Session;
 import com.example.Login.Entity.User;
 import com.example.Login.Services.LoginService;
-import com.example.Login.utils.UsersNotFoundException;
+import com.example.Login.Utils.UsersNotFoundException;
 
 @RestController
 @RequestMapping("/api")
@@ -60,7 +60,7 @@ public class LoginController {
 	
 	//require authentication
 	@PostMapping("/hello")
-	public ResponseEntity<String> sayHello(@RequestBody User user) {
+	public ResponseEntity<String> sayHello() {
 		return ResponseEntity.ok().body("Hello World!");
 	}
 	

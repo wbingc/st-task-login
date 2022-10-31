@@ -14,8 +14,8 @@ import com.example.Login.Entity.Session;
 import com.example.Login.Entity.User;
 import com.example.Login.Repository.SessionRepository;
 import com.example.Login.Repository.UserRepository;
-import com.example.Login.utils.UsersNotFoundException;
-import com.example.Login.utils.Utils;
+import com.example.Login.Utils.UsersNotFoundException;
+import com.example.Login.Utils.Utils;
 
 @Service
 public class LoginService {

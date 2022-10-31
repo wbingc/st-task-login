@@ -1,4 +1,4 @@
-package com.example.Login.utils;
+package com.example.Login.Utils;
 
 public class UsersNotFoundException extends Exception {
 	

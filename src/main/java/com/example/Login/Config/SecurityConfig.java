@@ -1,4 +1,4 @@
-package com.example.Login.config;
+package com.example.Login.Config;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -9,6 +9,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,13 +28,17 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.Login.Services.RedisAuthenticationService;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
-	
+
+	final Logger LOGGER = LogManager.getLogger(getClass());
+
 	@Autowired
 	private RedisAuthenticationService redisAuthService;
 	
@@ -44,7 +52,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.csrf(csrf -> csrf.disable())
+				.csrf(AbstractHttpConfigurer::disable)
 				.addFilterAt(this::authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.authorizeHttpRequests(auth -> auth
 						.mvcMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
@@ -69,6 +77,7 @@ public class SecurityConfig {
 	
 	private void authenticationFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		Optional<Authentication> authentication = this.redisAuthService.authenticate((HttpServletRequest)request);
+		LOGGER.info("Authentication Filter for : " + authentication.get().getName());
 		authentication.ifPresent(
 				SecurityContextHolder.getContext()::setAuthentication);
 		chain.doFilter(request, response);
