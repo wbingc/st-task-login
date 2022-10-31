@@ -18,6 +18,8 @@ import com.example.Login.Entity.User;
 import com.example.Login.Services.LoginService;
 import com.example.Login.Utils.UsersNotFoundException;
 
+import javax.print.attribute.standard.Media;
+
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -29,7 +31,8 @@ public class LoginController {
 		this.loginService = loginService;
 	}
 	
-	@PostMapping("/auth/login")
+	@PostMapping(value = "/auth/login",
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> login(@RequestBody User user) {
 		try {
 			String token = loginService.login(user);
@@ -41,12 +44,13 @@ public class LoginController {
 		}
 	}
 	
-	@PostMapping("/auth/fakelogin")
+	@PostMapping(value = "/auth/fakelogin",
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> fakeLogin(@RequestBody User user) {
 		return ResponseEntity.ok().body(UUID.randomUUID().toString());
 	}
 	
-	@PostMapping(path="/auth/signup",
+	@PostMapping(value = "/auth/signup",
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> register(@RequestBody User user) {
