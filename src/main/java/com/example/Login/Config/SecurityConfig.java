@@ -55,8 +55,6 @@ public class SecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> auth
 								.mvcMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-								//.mvcMatchers(HttpMethod.POST, "/api/auth/signup").permitAll()
-								//.mvcMatchers(HttpMethod.POST, "/api/auth/fakelogin").permitAll()
 								.mvcMatchers(HttpMethod.POST, "/api/hello").authenticated()
 								.mvcMatchers(HttpMethod.GET, "/api/user/**").permitAll()
 						)
