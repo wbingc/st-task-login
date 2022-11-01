@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.Login.mapper.UserMapper">
+
+    <!-- Define ResultMap for Type User -->
+    <resultMap id="userRM" type="com.example.Login.entity.User">
+        <id property="email" javaType="String" column="EMAIL"/>
+        <result property="password" javaType="String" column="PASSWORD"/>
+    </resultMap>
+
+    <!-- SELECT STATEMENT -->
+    <select id="findByEmail" parameterType="String" resultType="com.example.Login.entity.User">
+        SELECT * FROM USERS WHERE EMAIL = #{email}
+    </select>
+    <select id="findAll" resultMap="userRM">
+        SELECT * FROM USERS
+    </select>
+
+    <!-- INSERT STATEMENT -->
+    <insert id="save" parameterType="com.example.Login.entity.User">
+        INSERT INTO USERS (EMAIL, PASSWORD ) VALUES (#{email}, #{password})
+    </insert>
+
+    <!-- DELETE STATEMENT -->
+    <!-- UPDATE STATEMENT -->
+</mapper>

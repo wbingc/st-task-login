@@ -1,4 +1,4 @@
-package com.example.Login.Controller;
+package com.example.Login.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,8 +6,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Login.Entity.Session;
-import com.example.Login.Entity.User;
-import com.example.Login.Services.LoginService;
-import com.example.Login.Utils.UsersNotFoundException;
+import com.example.Login.entity.Session;
+import com.example.Login.entity.User;
+import com.example.Login.services.LoginService;
+import com.example.Login.utils.UsersNotFoundException;
 
 @RestController
 @RequestMapping("/api")
@@ -36,7 +34,7 @@ public class LoginController {
 	public ResponseEntity<String> login(@RequestBody User user) {
 		try {
 			String token = loginService.login(user);
-			return ResponseEntity.ok().body(token);
+			return ResponseEntity.ok().body("Token: " + token);
 		} catch (UsersNotFoundException e) {
 			return ResponseEntity.badRequest().body("No user record found.");
 		} catch (IllegalStateException e) {
@@ -65,8 +63,9 @@ public class LoginController {
 	//require authentication
 	@PostMapping("/hello")
 	public ResponseEntity<String> sayHello() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return ResponseEntity.ok().body("Hello, " + authentication.getName());
+		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		//return ResponseEntity.ok().body("Hello, " + authentication.getName());
+		return ResponseEntity.ok().body("Hello, ");
 	}
 	
 	@GetMapping("/user/{email}")

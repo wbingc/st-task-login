@@ -1,4 +1,4 @@
-package com.example.Login.Services;
+package com.example.Login.services;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -10,24 +10,24 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Login.Entity.Session;
-import com.example.Login.Entity.User;
-import com.example.Login.Repository.SessionRepository;
-import com.example.Login.Repository.UserRepository;
-import com.example.Login.Utils.UsersNotFoundException;
-import com.example.Login.Utils.Utils;
+import com.example.Login.entity.Session;
+import com.example.Login.entity.User;
+import com.example.Login.mapper.SessionMapper;
+import com.example.Login.mapper.UserMapper;
+import com.example.Login.utils.UsersNotFoundException;
+import com.example.Login.utils.Utils;
 
 @Service
 public class LoginService {
 
 	final Logger LOGGER = LogManager.getLogger(getClass());
-	private final UserRepository userRepo;
-	private final SessionRepository sessionRepo;
+	private final UserMapper userMapper;
+	private final SessionMapper sessionMapper;
 	
 	@Autowired
-	public LoginService(UserRepository userRepo, SessionRepository sessionRepo) {
-		this.userRepo = userRepo;
-		this.sessionRepo = sessionRepo;
+	public LoginService(UserMapper userRepo, SessionMapper sessionRepo) {
+		this.userMapper = userRepo;
+		this.sessionMapper = sessionRepo;
 	}
 	
 	/***
@@ -41,15 +41,14 @@ public class LoginService {
 			throw new IllegalArgumentException("Invalid Argument.");
 		
 		//check if user exist
-		Optional<User> result = userRepo.findById(user.getEmail());
+		Optional<User> result = userMapper.findByEmail(user.getEmail());
 		if(result.isPresent()) throw new IllegalStateException("Email Address is already in used.");
 		
 		UUID uuid = UUID.randomUUID();
 		Session session = new Session();
 		session.setToken(uuid.toString());
 		session.setEmail(user.getEmail());
-		sessionRepo.save(session);
-		
+
 		try {
 			String hash = Utils.digest(user.getPassword());
 			user.setPassword(hash);
@@ -59,8 +58,10 @@ public class LoginService {
 		}
 
 		LOGGER.info("Registering User : " + user.getEmail());
-		
-		return userRepo.save(user);
+		userMapper.save(user);
+		sessionMapper.save(session);
+
+		return user;
 	}
 	
 	/***
@@ -72,7 +73,7 @@ public class LoginService {
 	 */
 	public User getUser(String email) throws UsersNotFoundException  {
 		LOGGER.debug("Retrieving user from database.");
-		Optional<User> result = userRepo.findById(email);
+		Optional<User> result = userMapper.findByEmail(email);
 		return result
 				.orElseThrow(UsersNotFoundException::new);
 	}
@@ -85,7 +86,7 @@ public class LoginService {
 	 */
 	public List<User> getAllUsers() throws UsersNotFoundException {
 		LOGGER.debug("Retrieving users from database.");
-		return (List<User>) userRepo.findAll();
+		return (List<User>) userMapper.findAll();
 	}
 	
 	/***
@@ -102,11 +103,11 @@ public class LoginService {
 			throw new IllegalArgumentException("Invalid Argument.");
 		
 		//check if user exist
-		Optional<User> result = userRepo.findById(user.getEmail());
+		Optional<User> result = userMapper.findByEmail(user.getEmail());
 		result.orElseThrow(UsersNotFoundException::new);
-		
 		result.get().setEmail(user.getEmail());
-		return userRepo.save(result.get());
+		userMapper.save(result.get());
+		return result.get();
 	}
 	
 	/**
@@ -116,7 +117,7 @@ public class LoginService {
 	 */
 	public void deleteUser(User user) {
 		LOGGER.debug("Deleting user from database.");
-		userRepo.delete(user);
+		//userMapper.delete(user);
 	}
 	
 	/***
@@ -131,14 +132,14 @@ public class LoginService {
 			throw new IllegalArgumentException("Invalid Argument.");
 		
 		//check if user exist
-		Optional<User> result = userRepo.findById(user.getEmail());
+		Optional<User> result = userMapper.findByEmail(user.getEmail());
 		result.orElseThrow(UsersNotFoundException::new);
-		
+
 		boolean valid = Utils.validate(result.get().getPassword(), user.getPassword());
 		if(!valid) throw new IllegalStateException("Credentials Mismatch.");
 		
 		//retrieve token
-		Optional<Session> sResult = sessionRepo.findById(user.getEmail());
+		Optional<Session> sResult = sessionMapper.findByEmail(user.getEmail());
 		sResult.orElseThrow(UsersNotFoundException::new);
 		
 		return sResult.get().getToken();
@@ -152,6 +153,6 @@ public class LoginService {
 	 */
 	public List<Session> getAllSession() {
 		LOGGER.debug("Retrieving sessions from database.");
-		return (List<Session>) sessionRepo.findAll();
+		return (List<Session>) sessionMapper.findAll();
 	}
 }
