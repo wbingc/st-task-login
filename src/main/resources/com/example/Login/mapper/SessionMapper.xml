@@ -25,5 +25,13 @@
     </insert>
 
     <!-- DELETE STATEMENT -->
+    <delete id="deleteByEmail" parameterType="String">
+        DELETE FROM SESSIONS WHERE EMAIL = #{email}
+    </delete>
+
+    <delete id="deleteByToken" parameterType="String">
+        DELETE FROM SESSIONS WHERE TOKEN = #{token}
+    </delete>
+
     <!-- UPDATE STATEMENT -->
 </mapper>

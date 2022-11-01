@@ -22,5 +22,9 @@
     </insert>
 
     <!-- DELETE STATEMENT -->
+    <delete id="deleteByEmail" parameterType="String">
+        DELETE FROM USERS WHERE EMAIL = #{email}
+    </delete>
+
     <!-- UPDATE STATEMENT -->
 </mapper>

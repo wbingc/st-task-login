@@ -86,28 +86,7 @@ public class LoginService {
 	 */
 	public List<User> getAllUsers() throws UsersNotFoundException {
 		LOGGER.debug("Retrieving users from database.");
-		return (List<User>) userMapper.findAll();
-	}
-	
-	/***
-	 * Update User record. 
-	 * @author wbing
-	 * @param  user User user
-	 * @return RedisUser user
-	 * @throws UsersNotFoundException userRepo.findAll();
-	 */
-	public User updateUser(User user) throws UsersNotFoundException {
-		LOGGER.debug("Updating users from database.");
-		
-		if(user == null) 
-			throw new IllegalArgumentException("Invalid Argument.");
-		
-		//check if user exist
-		Optional<User> result = userMapper.findByEmail(user.getEmail());
-		result.orElseThrow(UsersNotFoundException::new);
-		result.get().setEmail(user.getEmail());
-		userMapper.save(result.get());
-		return result.get();
+		return userMapper.findAll();
 	}
 	
 	/**
@@ -117,7 +96,8 @@ public class LoginService {
 	 */
 	public void deleteUser(User user) {
 		LOGGER.debug("Deleting user from database.");
-		//userMapper.delete(user);
+		userMapper.deleteByEmail(user.getEmail());
+		sessionMapper.deleteByEmail(user.getEmail());
 	}
 	
 	/***
@@ -153,6 +133,6 @@ public class LoginService {
 	 */
 	public List<Session> getAllSession() {
 		LOGGER.debug("Retrieving sessions from database.");
-		return (List<Session>) sessionMapper.findAll();
+		return sessionMapper.findAll();
 	}
 }

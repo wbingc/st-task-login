@@ -13,4 +13,6 @@ public interface SessionMapper {
     Optional<Session> findByToken(String token);
     List<Session> findAll();
     void save(Session sessions);
+    void deleteByEmail(String email);
+    void deleteByToken(String token);
 }

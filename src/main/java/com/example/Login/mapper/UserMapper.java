@@ -8,4 +8,5 @@ public interface UserMapper {
     Optional<User> findByEmail(String email);
     List<User> findAll();
     void save(User user);
+    void deleteByEmail(String email);
 }
