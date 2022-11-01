@@ -25,9 +25,9 @@ public class LoginService {
 	private final SessionMapper sessionMapper;
 	
 	@Autowired
-	public LoginService(UserMapper userRepo, SessionMapper sessionRepo) {
-		this.userMapper = userRepo;
-		this.sessionMapper = sessionRepo;
+	public LoginService(UserMapper userMapper, SessionMapper sessionMapper) {
+		this.userMapper = userMapper;
+		this.sessionMapper = sessionMapper;
 	}
 	
 	/***

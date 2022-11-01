@@ -23,7 +23,7 @@ public class SessionAuthenticationService {
 
 	final Logger LOGGER = LogManager.getLogger(getClass());
 	private static final String BEARER_PREFIX = "Bearer ";
-	private final SessionMapper sessionRepo;
+	private final SessionMapper sessionMapper;
 
 	private enum Role {
 		USER
@@ -31,7 +31,7 @@ public class SessionAuthenticationService {
 
 	@Autowired
 	public SessionAuthenticationService(SessionMapper sessionRepo) {
-		this.sessionRepo = sessionRepo;
+		this.sessionMapper = sessionRepo;
 	}
 
 	/***
@@ -51,7 +51,7 @@ public class SessionAuthenticationService {
 	 */
 	private Optional<Authentication> lookup(String token) {
 		LOGGER.info("Lookup : " + token);
-		Optional<Session> session = sessionRepo.findByToken(token);
+		Optional<Session> session = sessionMapper.findByToken(token);
 		if(session.isPresent()) {
 			LOGGER.debug("Creating authentication for : " + session.get().getEmail());
 			Authentication authentication = create(session.get().getEmail());
