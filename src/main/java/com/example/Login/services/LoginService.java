@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.example.Login.entity.UserDTO;
 import com.example.Login.utils.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,10 +52,6 @@ public class LoginService {
 	public User register(User user) {
 		if(user == null) 
 			throw new IllegalArgumentException("Invalid Argument.");
-		
-		//check if user exist
-		Optional<User> result = userMapper.findByEmail(user.getEmail());
-		if(result.isPresent()) throw new IllegalStateException("Email Address is already in used.");
 
 		try {
 			UUID uuid = UUID.randomUUID();
@@ -67,9 +62,32 @@ public class LoginService {
 			LOGGER.error("Unable to compute hash of password.");
 		}
 
-		LOGGER.info("Registering User : " + user.getEmail());
+		LOGGER.debug("Registering User : " + user.getEmail());
 		userMapper.save(user);
 		return user;
+	}
+
+	/***
+	 * Register a list of users define by JSON array
+	 * @author wbing
+	 * @param list List<User>
+	 */
+	public void saveAll(List<User> list) {
+		if(list == null || list.isEmpty())
+			throw new IllegalArgumentException("Invalid Argument.");
+
+		list.forEach(user -> {
+			try {
+				UUID uuid = UUID.randomUUID();
+				String hash = Utils.digest(user.getPassword());
+				user.setToken(uuid.toString()).setStatus(Status.ACTIVE.toString()).setPassword(hash);
+				LOGGER.debug("implement updates: " + user.toString());
+			} catch (NoSuchAlgorithmException e) {
+				LOGGER.error("Unable to compute hash of password.");
+			}
+		});
+		LOGGER.info("Registering: " + list.toString());
+		userMapper.saveAll(list);
 	}
 	
 	/***
@@ -118,7 +136,7 @@ public class LoginService {
 	 * @param obj UserDTO
 	 * @throws UsersNotFoundException userNotFoundException
 	 */
-	public void updatePassword(String email, UserDTO obj) throws UsersNotFoundException {
+	public void updatePassword(String email, User obj) throws UsersNotFoundException {
 		LOGGER.debug("Resetting user password.");
 		Optional<User> result = userMapper.findByEmail(email);
 		result.orElseThrow(UsersNotFoundException::new);
@@ -126,7 +144,7 @@ public class LoginService {
 			throw new IllegalArgumentException("Cannot re-use password.");
 
 		try {
-			userMapper.updateUser(new UserDTO().setPassword(Utils.digest(obj.getPassword())), email);
+			userMapper.updateUser(new User().setPassword(Utils.digest(obj.getPassword())), email);
 		} catch (NoSuchAlgorithmException e) {
 			LOGGER.error("Unable to compute hash of password.");
 		}
@@ -138,9 +156,15 @@ public class LoginService {
 	 * @param email String
 	 * @param obj UserDTO
 	 */
-	public void updateUser(String email, UserDTO obj) {
+	public void updateUser(String email, User obj) {
 		LOGGER.debug("Updating user information.");
 		userMapper.updateUser(obj, email);
+	}
+
+	public void updateAll(List<User> list) {
+		LOGGER.info("Batch update on user information.");
+		userMapper.updateAll(list);
+		LOGGER.info("Batch update completes.");
 	}
 
 	/***
@@ -153,7 +177,7 @@ public class LoginService {
 	public String refreshToken(String email) {
 		LOGGER.debug("Refreshing token for : " + email);
 		String uuid = UUID.randomUUID().toString();
-		userMapper.updateUser(new UserDTO().setToken(uuid),email);
+		userMapper.updateUser(new User().setToken(uuid),email);
 		return uuid;
 	}
 	

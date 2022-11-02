@@ -3,10 +3,10 @@ package com.example.Login.controller;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.Login.entity.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +48,24 @@ public class LoginController {
 			User result = loginService.register(user);
 			return ResponseEntity.ok().body("User: " + result.getEmail() + " registered.");
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.badRequest().body("Email Address is already in used.");
+			return ResponseEntity.badRequest().body(e.getMessage());
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Unable to register.");
+			return ResponseEntity.badRequest().body("Email Address is already in used.");
+		}
+	}
+
+	@PostMapping(value = "/auth/signup/all",
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> registerAll(@RequestBody List<User> list) {
+		try {
+			loginService.saveAll(list);
+			return ResponseEntity.ok().body("Users registered.");
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body("Unable to register user.");
 		}
 	}
 	
@@ -91,7 +106,7 @@ public class LoginController {
 	}
 
 	@PutMapping("/reset")
-	public ResponseEntity<String> updatePassword(@RequestBody UserDTO obj) {
+	public ResponseEntity<String> updatePassword(@RequestBody User obj) {
 		try{
 			loginService.updatePassword(
 					SecurityContextHolder.getContext().getAuthentication().getName(), obj);
@@ -106,18 +121,28 @@ public class LoginController {
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<String> updateStatus(@RequestBody UserDTO user) {
+	public ResponseEntity<String> updateUser(@RequestBody User user) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		try{
-			loginService.updateUser(
-					SecurityContextHolder.getContext().getAuthentication().getName(),
-					user);
-			return ResponseEntity.ok().body("Successfully updated user details for \""
-				+ SecurityContextHolder.getContext().getAuthentication().getName() + "\".");
+			loginService.updateUser(authentication.getName(), user);
+			return ResponseEntity.ok().body("Successfully updated user details for \"" +
+					authentication.getName() + "\".");
+		}
+		catch (Exception e) {
+			return ResponseEntity.badRequest().body("Unable to process request.");
+		}
+	}
+
+	@PutMapping("/update/all")
+	public ResponseEntity<String> updateAll(@RequestBody List<User> list) {
+		try{
+			loginService.updateAll(list);
+			return ResponseEntity.ok().body("Successfully updated user details.");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body("Unable to process request.");
-		}
+		}	
 	}
 
 	@PutMapping("/refresh/{email}")
