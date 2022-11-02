@@ -17,6 +17,7 @@ import com.example.Login.entity.User;
 import com.example.Login.mapper.UserMapper;
 import com.example.Login.utils.UsersNotFoundException;
 import com.example.Login.utils.Utils;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LoginService {
@@ -125,8 +126,7 @@ public class LoginService {
 			throw new IllegalArgumentException("Cannot re-use password.");
 
 		try {
-			String newPw = Utils.digest(obj.getPassword());
-			userMapper.updatePassword(email, newPw);
+			userMapper.updateUser(new UserDTO().setPassword(Utils.digest(obj.getPassword())), email);
 		} catch (NoSuchAlgorithmException e) {
 			LOGGER.error("Unable to compute hash of password.");
 		}
@@ -149,10 +149,11 @@ public class LoginService {
 	 * @param email String
 	 * @return uuid String
 	 */
+	@Transactional
 	public String refreshToken(String email) {
 		LOGGER.debug("Refreshing token for : " + email);
 		String uuid = UUID.randomUUID().toString();
-		userMapper.updateToken(email, uuid);
+		userMapper.updateUser(new UserDTO().setToken(uuid),email);
 		return uuid;
 	}
 	

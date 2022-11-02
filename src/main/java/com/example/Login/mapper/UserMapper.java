@@ -13,7 +13,5 @@ public interface UserMapper {
     List<User> findAll();
     void save(User user);
     void deleteByEmail(String email);
-    void updatePassword(@Param("email") String email, @Param("password") String password);
     void updateUser(@Param("user") UserDTO obj, @Param("email") String email);
-    void updateToken(@Param("email") String email, @Param("token") String token);
 }

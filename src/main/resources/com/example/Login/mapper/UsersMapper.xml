@@ -34,13 +34,22 @@
     </delete>
 
     <!-- UPDATE STATEMENT -->
-    <update id="updatePassword" parameterType="string">
-        UPDATE USERS SET PASSWORD = #{password} WHERE EMAIL = #{email}
-    </update>
     <update id="updateUser">
-        UPDATE USERS SET NAME = #{user.name}, STATUS = #{user.status} WHERE EMAIL = #{email}
-    </update>
-    <update id="updateToken" parameterType="string">
-        UPDATE USERS SET TOKEN = #{token} WHERE EMAIL = #{email}
+        UPDATE USERS
+            <set>
+                <if test="user.password != null">
+                    PASSWORD = #{user.password},
+                </if>
+                <if test="user.token != null">
+                    TOKEN = #{user.token},
+                </if>
+                <if test="user.name != null">
+                    NAME = #{user.name},
+                </if>
+                <if test="user.status != null">
+                    STATUS = #{user.status}
+                </if>
+            </set>
+        WHERE EMAIL = #{email}
     </update>
 </mapper>
