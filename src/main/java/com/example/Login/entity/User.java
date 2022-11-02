@@ -1,17 +1,18 @@
 package com.example.Login.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
-public class User implements Serializable{
+@Accessors(chain = true)
+public class User {
 
-	@Serial
-	private static final long serialVersionUID = 1L;
-
+	private int id;
 	private String email;
+	private String name;
 	private String password;
+	private String status;
+	private String token;
 }

@@ -1,7 +1,7 @@
 package com.example.Login.services;
 
-import com.example.Login.entity.Session;
-import com.example.Login.mapper.SessionMapper;
+import com.example.Login.entity.User;
+import com.example.Login.mapper.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +23,12 @@ public class SessionAuthenticationService {
 
 	final Logger LOGGER = LogManager.getLogger(getClass());
 	private static final String BEARER_PREFIX = "Bearer ";
-	private final SessionMapper sessionMapper;
+
+	@Autowired
+	private UserMapper userMapper;
 
 	private enum Role {
 		USER
-	}
-
-	@Autowired
-	public SessionAuthenticationService(SessionMapper sessionRepo) {
-		this.sessionMapper = sessionRepo;
 	}
 
 	/***
@@ -51,10 +48,10 @@ public class SessionAuthenticationService {
 	 */
 	private Optional<Authentication> lookup(String token) {
 		LOGGER.info("Lookup : " + token);
-		Optional<Session> session = sessionMapper.findByToken(token);
-		if(session.isPresent()) {
-			LOGGER.debug("Creating authentication for : " + session.get().getEmail());
-			Authentication authentication = create(session.get().getEmail());
+		Optional<User> result = userMapper.findByToken(token);
+		if(result.isPresent()) {
+			LOGGER.debug("Creating authentication for : " + result.get().getEmail());
+			Authentication authentication = create(result.get().getEmail());
 			return Optional.of(authentication);
 		}
 		return Optional.empty();

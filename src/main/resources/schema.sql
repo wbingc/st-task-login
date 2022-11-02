@@ -1,15 +1,11 @@
 CREATE TABLE IF NOT EXISTS `Users`;
 
 CREATE TABLE `Users` (
+  `Id` NUMERIC NOT NULL,
   `Email` VARCHAR(100) NOT NULL,
+  `Name` VARCHAR(100) NOT NULL,
   `Password` VARCHAR(256) NOT NULL,
-  PRIMARY KEY(`Email`)
-)
-
-CREATE TABLE IF NOT EXISTS `Sessions`;
-
-CREATE TABLE `Sessions` (
-  `Email` VARCHAR(100) NOT NULL,
-  `Sessions` VARCHAR(100) NOT NULL,
-  PRIMARY KEY(`Email`)
+  `Status` VARCHAR(10) NOT NULL,
+  `Token` VARCHAR(100),
+  PRIMARY KEY(`Id`)
 )

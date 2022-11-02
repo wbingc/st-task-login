@@ -4,13 +4,20 @@
 
     <!-- Define ResultMap for Type User -->
     <resultMap id="userRM" type="com.example.Login.entity.User">
-        <id property="email" javaType="String" column="EMAIL"/>
+        <id property="id" javaType="int" column="ID"/>
+        <result property="email" javaType="String" column="EMAIL"/>
+        <result property="name" javaType="String" column="NAME"/>
         <result property="password" javaType="String" column="PASSWORD"/>
+        <result property="status" javaType="String" column="STATUS"/>
+        <result property="token" javaType="String" column="TOKEN"/>
     </resultMap>
 
     <!-- SELECT STATEMENT -->
-    <select id="findByEmail" parameterType="String" resultType="com.example.Login.entity.User">
+    <select id="findByEmail" parameterType="string" resultType="com.example.Login.entity.User">
         SELECT * FROM USERS WHERE EMAIL = #{email}
+    </select>
+    <select id="findByToken" parameterType="string" resultType="com.example.Login.entity.User">
+        SELECT * FROM USERS WHERE TOKEN = #{token}
     </select>
     <select id="findAll" resultMap="userRM">
         SELECT * FROM USERS
@@ -18,13 +25,22 @@
 
     <!-- INSERT STATEMENT -->
     <insert id="save" parameterType="com.example.Login.entity.User">
-        INSERT INTO USERS (EMAIL, PASSWORD ) VALUES (#{email}, #{password})
+        INSERT INTO USERS (EMAIL, NAME, PASSWORD, STATUS, TOKEN ) VALUES (#{email}, #{name}, #{password}, #{status}, #{token})
     </insert>
 
     <!-- DELETE STATEMENT -->
-    <delete id="deleteByEmail" parameterType="String">
+    <delete id="deleteByEmail" parameterType="string">
         DELETE FROM USERS WHERE EMAIL = #{email}
     </delete>
 
     <!-- UPDATE STATEMENT -->
+    <update id="updatePassword" parameterType="string">
+        UPDATE USERS SET PASSWORD = #{password} WHERE EMAIL = #{email}
+    </update>
+    <update id="updateUser">
+        UPDATE USERS SET NAME = #{user.name}, STATUS = #{user.status} WHERE EMAIL = #{email}
+    </update>
+    <update id="updateToken" parameterType="string">
+        UPDATE USERS SET TOKEN = #{token} WHERE EMAIL = #{email}
+    </update>
 </mapper>
