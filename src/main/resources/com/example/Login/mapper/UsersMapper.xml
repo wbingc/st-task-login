@@ -93,7 +93,8 @@
     </delete>
 
     <!-- UPDATE STATEMENT -->
-    <update id="updateUser">
+    <update id="updateUser" parameterType="com.example.Login.entity.UserDTO">
+        BEGIN
         UPDATE USERS
             <set>
                 <if test="user.password != null">
@@ -110,8 +111,18 @@
                 </if>
             </set>
         <where>
+            EMAIL = #{email};
+        </where>
+        UPDATE WALLET
+            <set>
+                <if test="user.balance != null">
+                    BALANCE = #{user.balance}
+                </if>
+            </set>
+        <where>
             EMAIL = #{email}
         </where>
+        ; END;
     </update>
 
     <update id="updateAll" parameterType="list">
@@ -130,6 +141,15 @@
                 </if>
                 <if test="u.status != null">
                     STATUS = #{u.status}
+                </if>
+            </set>
+            <where>
+                EMAIL = #{u.email};
+            </where>
+            UPDATE WALLET
+            <set>
+                <if test="u.balance != null">
+                    BALANCE = #{u.balance}
                 </if>
             </set>
             <where>

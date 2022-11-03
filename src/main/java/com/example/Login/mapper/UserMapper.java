@@ -12,13 +12,13 @@ public interface UserMapper {
     //Optional<User> findByEmail(String email);
     Optional<UserDTO> findByEmail(String email);
     Optional<User> findByToken(String token);
-    List<User> findAll();
+    List<UserDTO> findAll();
     void save(User user);
     void saveAll(List<User> users);
-    void saveUserWithWallet(User user);
-    void saveAllUserWithWallet(List<User> users);
+    void saveUserWithWallet(UserDTO user);
+    void saveAllUserWithWallet(List<UserDTO> users);
     void deleteByEmail(String email);
-    void deleteAll(List<User> users);
-    void updateUser(@Param("user") User obj, @Param("email") String email);
-    void updateAll(List<User> users);
+    void deleteAll(List<UserDTO> users);
+    void updateUser(@Param("user") UserDTO obj, @Param("email") String email);
+    void updateAll(List<UserDTO> users);
 }

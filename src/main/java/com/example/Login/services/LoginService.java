@@ -7,7 +7,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.example.Login.entity.UserDTO;
-import com.example.Login.entity.Wallet;
 import com.example.Login.utils.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +33,7 @@ public class LoginService {
 	 * @return RedisUser token
 	 * @throws UsersNotFoundException userRepo.findAll();
 	 */
-	public String login(User user) throws UsersNotFoundException {
+	public String login(UserDTO user) throws UsersNotFoundException {
 		if(user == null) throw new IllegalArgumentException("Invalid Argument.");
 
 		//check if user exist
@@ -51,7 +50,7 @@ public class LoginService {
 	 * @param  user User user
 	 * @return User user
 	 */
-	public User register(User user) {
+	public UserDTO register(UserDTO user) {
 		if(user == null) 
 			throw new IllegalArgumentException("Invalid Argument.");
 
@@ -63,7 +62,6 @@ public class LoginService {
 		catch (NoSuchAlgorithmException e) {
 			LOGGER.error("Unable to compute hash of password.");
 		}
-
 		LOGGER.debug("Registering User : " + user.getEmail());
 		//userMapper.save(user);
 		userMapper.saveUserWithWallet(user);
@@ -75,7 +73,7 @@ public class LoginService {
 	 * @author wbing
 	 * @param list List<User>
 	 */
-	public void saveAll(List<User> list) {
+	public void saveAll(List<UserDTO> list) {
 		if(list == null || list.isEmpty())
 			throw new IllegalArgumentException("Invalid Argument.");
 
@@ -114,7 +112,7 @@ public class LoginService {
 	 * @return List<RedisUser> users
 	 * @throws UsersNotFoundException UserNotFoundException
 	 */
-	public List<User> getAllUsers() throws UsersNotFoundException {
+	public List<UserDTO> getAllUsers() throws UsersNotFoundException {
 		LOGGER.debug("Retrieving users from database.");
 		return userMapper.findAll();
 	}
@@ -126,10 +124,10 @@ public class LoginService {
 	 */
 	public List<String> getAllSession() throws UsersNotFoundException {
 		LOGGER.debug("Retrieving sessions from database.");
-		List<User> resultSet = userMapper.findAll();
+		List<UserDTO> resultSet = userMapper.findAll();
 		if(resultSet.isEmpty()) throw new UsersNotFoundException("There are no user in records.");
 		return resultSet.stream()
-				.map(User::getToken)
+				.map(UserDTO::getToken)
 				.collect(Collectors.toList());
 	}
 
@@ -140,7 +138,7 @@ public class LoginService {
 	 * @param obj UserDTO
 	 * @throws UsersNotFoundException userNotFoundException
 	 */
-	public void updatePassword(String email, User obj) throws UsersNotFoundException {
+	public void updatePassword(String email, UserDTO obj) throws UsersNotFoundException {
 		LOGGER.debug("Resetting user password.");
 		Optional<UserDTO> result = userMapper.findByEmail(email);
 		result.orElseThrow(UsersNotFoundException::new);
@@ -148,7 +146,7 @@ public class LoginService {
 			throw new IllegalArgumentException("Cannot re-use password.");
 
 		try {
-			userMapper.updateUser(new User().setPassword(Utils.digest(obj.getPassword())), email);
+			userMapper.updateUser(new UserDTO().setPassword(Utils.digest(obj.getPassword())), email);
 		} catch (NoSuchAlgorithmException e) {
 			LOGGER.error("Unable to compute hash of password.");
 		}
@@ -160,7 +158,7 @@ public class LoginService {
 	 * @param email String
 	 * @param obj UserDTO
 	 */
-	public void updateUser(String email, User obj) {
+	public void updateUser(String email, UserDTO obj) {
 		LOGGER.debug("Updating user information.");
 		userMapper.updateUser(obj, email);
 	}
@@ -170,7 +168,7 @@ public class LoginService {
 	 * @author wbing
 	 * @param list List<User>
 	 */
-	public void updateAll(List<User> list) {
+	public void updateAll(List<UserDTO> list) {
 		if(list == null || list.isEmpty())
 			throw new IllegalArgumentException("Invalid Argument.");
 
@@ -189,7 +187,7 @@ public class LoginService {
 	public String refreshToken(String email) {
 		LOGGER.debug("Refreshing token for : " + email);
 		String uuid = UUID.randomUUID().toString();
-		userMapper.updateUser(new User().setToken(uuid),email);
+		userMapper.updateUser(new UserDTO().setToken(uuid),email);
 		return uuid;
 	}
 	
@@ -203,7 +201,7 @@ public class LoginService {
 		userMapper.deleteByEmail(email);
 	}
 
-	public void deleteAll(List<User> list) {
+	public void deleteAll(List<UserDTO> list) {
 		LOGGER.debug("Deleting a list of users from database.");
 		LOGGER.debug(list.toString());
 		userMapper.deleteAll(list);

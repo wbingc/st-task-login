@@ -24,7 +24,7 @@ public class LoginController {
 	
 	@PostMapping(value = "/auth/login",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> login(@RequestBody User user) {
+	public ResponseEntity<String> login(@RequestBody UserDTO user) {
 		try {
 			String token = loginService.login(user);
 			return ResponseEntity.ok().body("Token: " + token);
@@ -37,16 +37,16 @@ public class LoginController {
 	
 	@PostMapping(value = "/auth/fakelogin",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> fakeLogin(@RequestBody User user) {
+	public ResponseEntity<String> fakeLogin(@RequestBody UserDTO user) {
 		return ResponseEntity.ok().body(UUID.randomUUID().toString());
 	}
 	
 	@PostMapping(value = "/auth/signup",
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> register(@RequestBody User user) {
+	public ResponseEntity<String> register(@RequestBody UserDTO user) {
 		try {
-			User result = loginService.register(user);
+			UserDTO result = loginService.register(user);
 			return ResponseEntity.ok().body("User: " + result.getEmail() + " registered.");
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -59,7 +59,7 @@ public class LoginController {
 	@PostMapping(value = "/auth/signup/all",
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> registerAll(@RequestBody List<User> list) {
+	public ResponseEntity<String> registerAll(@RequestBody List<UserDTO> list) {
 		try {
 			loginService.saveAll(list);
 			return ResponseEntity.ok().body("Users registered.");
@@ -89,9 +89,9 @@ public class LoginController {
 	}
 	
 	@GetMapping("/user/all") 
-	public ResponseEntity<List<User>> listAll() {
+	public ResponseEntity<List<UserDTO>> listAll() {
 		try {
-			return ResponseEntity.ok(loginService.getAllUsers());
+			return ResponseEntity.ok().body(loginService.getAllUsers());
 		} catch (UsersNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
@@ -109,7 +109,7 @@ public class LoginController {
 
 	@PutMapping(value = "/reset",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updatePassword(@RequestBody User obj) {
+	public ResponseEntity<String> updatePassword(@RequestBody UserDTO obj) {
 		try{
 			loginService.updatePassword(
 					SecurityContextHolder.getContext().getAuthentication().getName(), obj);
@@ -125,7 +125,7 @@ public class LoginController {
 
 	@PutMapping(value = "/update",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateUser(@RequestBody User user) {
+	public ResponseEntity<String> updateUser(@RequestBody UserDTO user) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		try{
 			loginService.updateUser(authentication.getName(), user);
@@ -133,13 +133,14 @@ public class LoginController {
 					authentication.getName() + "\".");
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}
 
 	@PutMapping(value = "/update/all",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateAll(@RequestBody List<User> list) {
+	public ResponseEntity<String> updateAll(@RequestBody List<UserDTO> list) {
 		try{
 			loginService.updateAll(list);
 			return ResponseEntity.ok().body("Successfully updated user details.");
@@ -171,7 +172,7 @@ public class LoginController {
 
 	@DeleteMapping(value = "/delete/all",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteAll(@RequestBody List<User> list) {
+	public ResponseEntity<String> deleteAll(@RequestBody List<UserDTO> list) {
 		try {
 			loginService.deleteAll(list);
 			return ResponseEntity.ok().body("Users are deleted.");
