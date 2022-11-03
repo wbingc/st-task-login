@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.example.Login.entity.UserDTO;
+import com.example.Login.entity.Wallet;
 import com.example.Login.utils.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,7 +38,7 @@ public class LoginService {
 		if(user == null) throw new IllegalArgumentException("Invalid Argument.");
 
 		//check if user exist
-		Optional<User> result = userMapper.findByEmail(user.getEmail());
+		Optional<UserDTO> result = userMapper.findByEmail(user.getEmail());
 		result.orElseThrow(UsersNotFoundException::new);
 		if(!Utils.validatePw(result.get().getPassword(), user.getPassword()))
 			throw new IllegalStateException("Credentials Mismatch.");
@@ -63,7 +65,8 @@ public class LoginService {
 		}
 
 		LOGGER.debug("Registering User : " + user.getEmail());
-		userMapper.save(user);
+		//userMapper.save(user);
+		userMapper.saveUserWithWallet(user);
 		return user;
 	}
 
@@ -86,8 +89,9 @@ public class LoginService {
 				LOGGER.error("Unable to compute hash of password.");
 			}
 		});
-		LOGGER.info("Registering: " + list.toString());
-		userMapper.saveAll(list);
+		LOGGER.debug("Registering: " + list.toString());
+		//userMapper.saveAll(list);
+		userMapper.saveAllUserWithWallet(list);
 	}
 	
 	/***
@@ -97,9 +101,9 @@ public class LoginService {
 	 * @return RedisUser user
 	 * @throws UsersNotFoundException UserNotFoundException
 	 */
-	public User getUser(String email) throws UsersNotFoundException  {
+	public UserDTO getUser(String email) throws UsersNotFoundException  {
 		LOGGER.debug("Retrieving user from database.");
-		Optional<User> result = userMapper.findByEmail(email);
+		Optional<UserDTO> result = userMapper.findByEmail(email);
 		return result
 				.orElseThrow(UsersNotFoundException::new);
 	}
@@ -138,7 +142,7 @@ public class LoginService {
 	 */
 	public void updatePassword(String email, User obj) throws UsersNotFoundException {
 		LOGGER.debug("Resetting user password.");
-		Optional<User> result = userMapper.findByEmail(email);
+		Optional<UserDTO> result = userMapper.findByEmail(email);
 		result.orElseThrow(UsersNotFoundException::new);
 		if(Utils.isSame(result.get().getPassword(), obj.getPassword()))
 			throw new IllegalArgumentException("Cannot re-use password.");

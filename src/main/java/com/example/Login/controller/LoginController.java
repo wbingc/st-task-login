@@ -3,6 +3,7 @@ package com.example.Login.controller;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.Login.entity.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,7 @@ public class LoginController {
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().body("Email Address is already in used.");
 		}
 	}
@@ -77,9 +79,9 @@ public class LoginController {
 	}
 	
 	@GetMapping("/user/{email}")
-	public ResponseEntity<User> getByEmail(@PathVariable("email") String email) {
+	public ResponseEntity<UserDTO> getByEmail(@PathVariable("email") String email) {
 		try {
-			User result = loginService.getUser(email);
+			UserDTO result = loginService.getUser(email);
 			return ResponseEntity.ok().body(result);
 		} catch (UsersNotFoundException e) {
 			return ResponseEntity.notFound().build();
