@@ -161,10 +161,18 @@ public class LoginService {
 		userMapper.updateUser(obj, email);
 	}
 
+	/***
+	 * Batch update on User Table
+	 * @author wbing
+	 * @param list List<User>
+	 */
 	public void updateAll(List<User> list) {
-		LOGGER.info("Batch update on user information.");
+		if(list == null || list.isEmpty())
+			throw new IllegalArgumentException("Invalid Argument.");
+
+		LOGGER.debug("Batch update on user information.");
+		LOGGER.debug(list.toString());
 		userMapper.updateAll(list);
-		LOGGER.info("Batch update completes.");
 	}
 
 	/***
@@ -189,5 +197,11 @@ public class LoginService {
 	public void deleteUser(String email) {
 		LOGGER.debug("Deleting user from database.");
 		userMapper.deleteByEmail(email);
+	}
+
+	public void deleteAll(List<User> list) {
+		LOGGER.debug("Deleting a list of users from database.");
+		LOGGER.debug(list.toString());
+		userMapper.deleteAll(list);
 	}
 }

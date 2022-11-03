@@ -13,6 +13,7 @@ public interface UserMapper {
     void save(User user);
     void saveAll(List<User> user);
     void deleteByEmail(String email);
+    void deleteAll(List<User> users);
     void updateUser(@Param("user") User obj, @Param("email") String email);
     void updateAll(List<User> users);
 }

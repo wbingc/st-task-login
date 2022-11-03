@@ -105,7 +105,8 @@ public class LoginController {
 		}
 	}
 
-	@PutMapping("/reset")
+	@PutMapping(value = "/reset",
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updatePassword(@RequestBody User obj) {
 		try{
 			loginService.updatePassword(
@@ -120,7 +121,8 @@ public class LoginController {
 		}
 	}
 
-	@PutMapping("/update")
+	@PutMapping(value = "/update",
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateUser(@RequestBody User user) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		try{
@@ -133,27 +135,46 @@ public class LoginController {
 		}
 	}
 
-	@PutMapping("/update/all")
+	@PutMapping(value = "/update/all",
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateAll(@RequestBody List<User> list) {
 		try{
 			loginService.updateAll(list);
 			return ResponseEntity.ok().body("Successfully updated user details.");
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().body("Unable to process request.");
-		}	
+		}
 	}
 
 	@PutMapping("/refresh/{email}")
 	public ResponseEntity<String> refreshToken(@PathVariable String email) {
-		String token = loginService.refreshToken(email);
-		return ResponseEntity.ok().body("New Token: " + token);
+		try {
+			String token = loginService.refreshToken(email);
+			return ResponseEntity.ok().body("New Token: " + token);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Unable to process request.");
+		}
 	}
 
 	@DeleteMapping("/delete/{email}")
 	public ResponseEntity<String> deleteUser(@PathVariable String email) {
-		loginService.deleteUser(email);
-		return ResponseEntity.ok().body(email + " is deleted.");
+		try {
+			loginService.deleteUser(email);
+			return ResponseEntity.ok().body(email + " is deleted.");
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Unable to process request.");
+		}
+	}
+
+	@DeleteMapping(value = "/delete/all",
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteAll(@RequestBody List<User> list) {
+		try {
+			loginService.deleteAll(list);
+			return ResponseEntity.ok().body("Users are deleted.");
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().body("Unable to process request.");
+		}
 	}
 }

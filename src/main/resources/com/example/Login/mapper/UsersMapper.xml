@@ -14,13 +14,13 @@
 
     <!-- SELECT STATEMENT -->
     <select id="findByEmail" parameterType="string" resultType="com.example.Login.entity.User">
-        SELECT NAME, PASSWORD, STATUS, TOKEN FROM USERS WHERE EMAIL = #{email}
+        SELECT ID, NAME, PASSWORD, STATUS, TOKEN FROM USERS WHERE EMAIL = #{email}
     </select>
     <select id="findByToken" parameterType="string" resultType="com.example.Login.entity.User">
-        SELECT EMAIL, PASSWORD FROM USERS WHERE TOKEN = #{token}
+        SELECT ID, EMAIL, PASSWORD FROM USERS WHERE TOKEN = #{token}
     </select>
     <select id="findAll" resultMap="userRM">
-        SELECT EMAIL, NAME, PASSWORD, STATUS, TOKEN FROM USERS
+        SELECT ID, EMAIL, NAME, PASSWORD, STATUS, TOKEN FROM USERS
     </select>
 
     <!-- INSERT STATEMENT -->
@@ -38,6 +38,12 @@
     <!-- DELETE STATEMENT -->
     <delete id="deleteByEmail" parameterType="string">
         DELETE FROM USERS WHERE EMAIL = #{email}
+    </delete>
+
+    <delete id="deleteAll" parameterType="list">
+        <foreach collection="list" index="index" item="u" separator=";" open="BEGIN" close="; END;">
+            DELETE FROM USERS WHERE EMAIL = #{u.email}
+        </foreach>
     </delete>
 
     <!-- UPDATE STATEMENT -->
@@ -61,8 +67,24 @@
     </update>
 
     <update id="updateAll" parameterType="list">
-        <foreach collection="list" item="u" index="index" separator=";" open="BEGIN" close=";END;">
-            UPDATE USERS SET NAME = #{u.name}, STATUS = #{u.status} WHERE EMAIL = #{u.email}
+        <foreach collection="list" item="u" index="index" separator=";" open="BEGIN" close="; END;">
+            <!-- UPDATE USERS SET NAME = #{u.name}, STATUS = #{u.status} WHERE EMAIL = #{u.email} -->
+            UPDATE USERS
+            <set>
+                <if test="u.password != null">
+                    PASSWORD = #{u.password},
+                </if>
+                <if test="u.token != null">
+                    TOKEN = #{u.token},
+                </if>
+                <if test="u.name != null">
+                    NAME = #{u.name},
+                </if>
+                <if test="u.status != null">
+                    STATUS = #{u.status}
+                </if>
+            </set>
+            WHERE EMAIL = #{u.email}
         </foreach>
     </update>
 </mapper>

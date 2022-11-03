@@ -56,6 +56,7 @@ public class SecurityConfig {
                         .mvcMatchers(HttpMethod.GET, "/api/user/**").permitAll()
                         .mvcMatchers(HttpMethod.PUT, "/api/reset").authenticated()
                         .mvcMatchers(HttpMethod.PUT, "/api/update").authenticated()
+                        .mvcMatchers(HttpMethod.PUT, "/api/update/**").authenticated()
                         .mvcMatchers(HttpMethod.DELETE, "/api/delete/**").authenticated()
                         .mvcMatchers(HttpMethod.PUT, "/api/refresh/**").authenticated()
                 )
