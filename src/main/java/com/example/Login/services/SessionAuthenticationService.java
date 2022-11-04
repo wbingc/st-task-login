@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 @Service
 public class SessionAuthenticationService {
 
-	final Logger LOGGER = LogManager.getLogger(getClass());
+	final Logger LOGGER = LogManager.getLogger();
 	private static final String BEARER_PREFIX = "Bearer ";
 
 	@Autowired

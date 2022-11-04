@@ -1,6 +1,5 @@
 package com.example.Login.controller;
 
-import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +24,7 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 
-	final Logger LOGGER = LogManager.getLogger(getClass());
+	final Logger LOGGER = LogManager.getLogger();
 	
 	@PostMapping(value = "/auth/login",
 			consumes = MediaType.APPLICATION_JSON_VALUE)

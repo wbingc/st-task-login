@@ -20,10 +20,11 @@ import com.example.Login.utils.Utils;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 public class LoginService {
 
-	final Logger LOGGER = LogManager.getLogger(getClass());
+	final Logger LOGGER = LogManager.getLogger();
+
 	@Autowired
 	private UserMapper userMapper;
 
@@ -68,9 +69,6 @@ public class LoginService {
 		LOGGER.debug("Registering User : " + user.getEmail());
 		//userMapper.save(user);
 		userMapper.saveUserWithWallet(user);
-
-		//test for db rollback
-		Utils.makeError();
 		return user;
 	}
 
@@ -98,8 +96,6 @@ public class LoginService {
 		LOGGER.debug("Registering: " + list.toString());
 		//userMapper.saveAll(list);
 		userMapper.saveAllUserWithWallet(list);
-		//test for db rollback
-		Utils.makeError();
 	}
 	
 	/***
@@ -174,8 +170,6 @@ public class LoginService {
 	public void updateUser(String email, UserDTO obj) {
 		LOGGER.debug("Updating user information.");
 		userMapper.updateUser(obj, email);
-		//test for db rollback
-		Utils.makeError();
 	}
 
 	/***
@@ -191,8 +185,6 @@ public class LoginService {
 		LOGGER.debug("Batch update on user information.");
 		LOGGER.debug(list.toString());
 		userMapper.updateAll(list);
-		//test for db rollback
-		Utils.makeError();
 	}
 
 	/***
@@ -218,8 +210,6 @@ public class LoginService {
 	public void deleteUser(String email) {
 		LOGGER.debug("Deleting user from database.");
 		userMapper.deleteByEmail(email);
-		//test for db rollback
-		Utils.makeError();
 	}
 
 	@Transactional
@@ -227,7 +217,5 @@ public class LoginService {
 		LOGGER.debug("Deleting a list of users from database.");
 		LOGGER.debug(list.toString());
 		userMapper.deleteAll(list);
-		//test for db rollback
-		Utils.makeError();
 	}
 }
