@@ -20,7 +20,7 @@ import com.example.Login.utils.Utils;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 public class LoginService {
 
 	final Logger LOGGER = LogManager.getLogger(getClass());
