@@ -69,4 +69,16 @@ public class Utils {
 		}
 		return false;
 	}
+
+	/***
+	 * Purposefully create a runtime exception to test db for rollback
+	 * @author wbing
+	 */
+	public static void makeError() {
+		try {
+			int a = 12/0;
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 }
