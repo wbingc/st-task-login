@@ -1,9 +1,13 @@
 package com.example.Login.controller;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.UUID;
 
 import com.example.Login.entity.UserDTO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Login.entity.User;
 import com.example.Login.services.LoginService;
 import com.example.Login.utils.UsersNotFoundException;
 
@@ -21,6 +24,8 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
+
+	final Logger LOGGER = LogManager.getLogger(getClass());
 	
 	@PostMapping(value = "/auth/login",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -29,8 +34,10 @@ public class LoginController {
 			String token = loginService.login(user);
 			return ResponseEntity.ok().body("Token: " + token);
 		} catch (UsersNotFoundException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("No user record found.");
 		} catch (IllegalStateException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
@@ -49,10 +56,14 @@ public class LoginController {
 			UserDTO result = loginService.register(user);
 			return ResponseEntity.ok().body("User: " + result.getEmail() + " registered.");
 		} catch (IllegalArgumentException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body(e.getMessage());
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Email Address is already in used.");
+		} catch (Exception e) {
+			LOGGER.debug(e.getMessage());
+			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}
 
@@ -64,9 +75,13 @@ public class LoginController {
 			loginService.saveAll(list);
 			return ResponseEntity.ok().body("Users registered.");
 		} catch (IllegalArgumentException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body(e.getMessage());
+		} catch (SQLIntegrityConstraintViolationException e) {
+			LOGGER.debug(e.getMessage());
+			return ResponseEntity.badRequest().body("Email Address is already in used.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Unable to register user.");
 		}
 	}
@@ -84,6 +99,7 @@ public class LoginController {
 			UserDTO result = loginService.getUser(email);
 			return ResponseEntity.ok().body(result);
 		} catch (UsersNotFoundException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -93,6 +109,7 @@ public class LoginController {
 		try {
 			return ResponseEntity.ok().body(loginService.getAllUsers());
 		} catch (UsersNotFoundException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -103,6 +120,7 @@ public class LoginController {
 			return ResponseEntity.ok().body(loginService.getAllSession());
 		}
 		catch (UsersNotFoundException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.notFound().build();
 		}
 	}
@@ -115,10 +133,13 @@ public class LoginController {
 					SecurityContextHolder.getContext().getAuthentication().getName(), obj);
 			return ResponseEntity.ok().body("Password successfully reset.");
 		} catch (IllegalArgumentException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body(e.getMessage());
 		} catch (UsersNotFoundException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("No user record found.");
 		} catch (Exception e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}
@@ -133,7 +154,7 @@ public class LoginController {
 					authentication.getName() + "\".");
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}
@@ -146,6 +167,7 @@ public class LoginController {
 			return ResponseEntity.ok().body("Successfully updated user details.");
 		}
 		catch (IllegalArgumentException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}
@@ -156,6 +178,7 @@ public class LoginController {
 			String token = loginService.refreshToken(email);
 			return ResponseEntity.ok().body("New Token: " + token);
 		} catch (Exception e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}
@@ -166,6 +189,7 @@ public class LoginController {
 			loginService.deleteUser(email);
 			return ResponseEntity.ok().body(email + " is deleted.");
 		} catch (Exception e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}
@@ -177,6 +201,7 @@ public class LoginController {
 			loginService.deleteAll(list);
 			return ResponseEntity.ok().body("Users are deleted.");
 		} catch (IllegalArgumentException e) {
+			LOGGER.debug(e.getMessage());
 			return ResponseEntity.badRequest().body("Unable to process request.");
 		}
 	}

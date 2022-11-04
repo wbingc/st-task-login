@@ -1,6 +1,7 @@
 package com.example.Login.services;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,13 +14,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Login.entity.User;
 import com.example.Login.mapper.UserMapper;
 import com.example.Login.utils.UsersNotFoundException;
 import com.example.Login.utils.Utils;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class LoginService {
 
 	final Logger LOGGER = LogManager.getLogger(getClass());
@@ -50,7 +51,8 @@ public class LoginService {
 	 * @param  user User user
 	 * @return User user
 	 */
-	public UserDTO register(UserDTO user) {
+	@Transactional
+	public UserDTO register(UserDTO user) throws SQLIntegrityConstraintViolationException {
 		if(user == null) 
 			throw new IllegalArgumentException("Invalid Argument.");
 
@@ -60,11 +62,20 @@ public class LoginService {
 			user.setToken(uuid.toString()).setStatus(Status.ACTIVE.toString()).setPassword(hash);
 		} 
 		catch (NoSuchAlgorithmException e) {
+			LOGGER.debug(e.getMessage());
 			LOGGER.error("Unable to compute hash of password.");
 		}
 		LOGGER.debug("Registering User : " + user.getEmail());
 		//userMapper.save(user);
 		userMapper.saveUserWithWallet(user);
+
+		//here to test for transactional error
+		try {
+			int a = 12/0;
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage());
+		}
+
 		return user;
 	}
 
@@ -73,7 +84,8 @@ public class LoginService {
 	 * @author wbing
 	 * @param list List<User>
 	 */
-	public void saveAll(List<UserDTO> list) {
+	@Transactional
+	public void saveAll(List<UserDTO> list) throws SQLIntegrityConstraintViolationException {
 		if(list == null || list.isEmpty())
 			throw new IllegalArgumentException("Invalid Argument.");
 
@@ -84,6 +96,7 @@ public class LoginService {
 				user.setToken(uuid.toString()).setStatus(Status.ACTIVE.toString()).setPassword(hash);
 				LOGGER.debug("implement updates: " + user.toString());
 			} catch (NoSuchAlgorithmException e) {
+				LOGGER.debug(e.getMessage());
 				LOGGER.error("Unable to compute hash of password.");
 			}
 		});
@@ -138,6 +151,7 @@ public class LoginService {
 	 * @param obj UserDTO
 	 * @throws UsersNotFoundException userNotFoundException
 	 */
+	@Transactional
 	public void updatePassword(String email, UserDTO obj) throws UsersNotFoundException {
 		LOGGER.debug("Resetting user password.");
 		Optional<UserDTO> result = userMapper.findByEmail(email);
@@ -148,6 +162,7 @@ public class LoginService {
 		try {
 			userMapper.updateUser(new UserDTO().setPassword(Utils.digest(obj.getPassword())), email);
 		} catch (NoSuchAlgorithmException e) {
+			LOGGER.debug(e.getMessage());
 			LOGGER.error("Unable to compute hash of password.");
 		}
 	}
@@ -158,6 +173,7 @@ public class LoginService {
 	 * @param email String
 	 * @param obj UserDTO
 	 */
+	@Transactional
 	public void updateUser(String email, UserDTO obj) {
 		LOGGER.debug("Updating user information.");
 		userMapper.updateUser(obj, email);
@@ -168,6 +184,7 @@ public class LoginService {
 	 * @author wbing
 	 * @param list List<User>
 	 */
+	@Transactional
 	public void updateAll(List<UserDTO> list) {
 		if(list == null || list.isEmpty())
 			throw new IllegalArgumentException("Invalid Argument.");
@@ -196,11 +213,13 @@ public class LoginService {
 	 * @author wbing
 	 * @param email String
 	 */
+	@Transactional
 	public void deleteUser(String email) {
 		LOGGER.debug("Deleting user from database.");
 		userMapper.deleteByEmail(email);
 	}
 
+	@Transactional
 	public void deleteAll(List<UserDTO> list) {
 		LOGGER.debug("Deleting a list of users from database.");
 		LOGGER.debug(list.toString());
