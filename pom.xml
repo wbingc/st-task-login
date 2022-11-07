@@ -19,6 +19,7 @@
         <lombok.version>1.18.24</lombok.version>
         <eureka.version>3.1.4</eureka.version>
         <mybatis.version>2.2.2</mybatis.version>
+        <aop-version>2.7.5</aop-version>
     </properties>
     <dependencies>
         <dependency>
@@ -88,6 +89,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <version>${aop-version}</version>
         </dependency>
     </dependencies>
     <build>

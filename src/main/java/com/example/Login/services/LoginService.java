@@ -63,10 +63,9 @@ public class LoginService {
 			user.setToken(uuid.toString()).setStatus(Status.ACTIVE.toString()).setPassword(hash);
 		} 
 		catch (NoSuchAlgorithmException e) {
-			LOGGER.debug(e.getMessage());
+			LOGGER.fatal(e.getMessage());
 			LOGGER.error("Unable to compute hash of password.");
 		}
-		LOGGER.debug("Registering User : " + user.getEmail());
 		//userMapper.save(user);
 		userMapper.saveUserWithWallet(user);
 		return user;

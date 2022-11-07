@@ -8,6 +8,7 @@ import com.example.Login.entity.UserDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ public class LoginController {
 	private LoginService loginService;
 
 	final Logger LOGGER = LogManager.getLogger();
-	
+
 	@PostMapping(value = "/auth/login",
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> login(@RequestBody UserDTO user) {

@@ -1,0 +1,186 @@
+[INFO ] 2022-11-07 14:06:13.941 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 30104 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 14:06:13.948 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 14:06:13.949 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 14:06:19.930 [main] LoginApplication : Started LoginApplication in 7.437 seconds (JVM running for 8.274)
+[DEBUG] 2022-11-07 14:06:31.070 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 14:06:31.071 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 14:06:31.097 [http-nio-8080-exec-1] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 14:06:31.112 [http-nio-8080-exec-1] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 14:06:31.205 [http-nio-8080-exec-1] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 14:06:31.274 [http-nio-8080-exec-1] findAll : <==      Total: 3
+[INFO ] 2022-11-07 14:57:49.150 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 27120 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 14:57:49.156 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 14:57:49.157 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 14:59:58.325 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 14240 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 14:59:58.331 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 14:59:58.332 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 15:00:04.564 [main] LoginApplication : Started LoginApplication in 7.714 seconds (JVM running for 8.673)
+[DEBUG] 2022-11-07 15:00:13.217 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 15:00:13.217 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 15:00:13.239 [http-nio-8080-exec-1] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 15:00:13.257 [http-nio-8080-exec-1] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 15:00:13.355 [http-nio-8080-exec-1] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 15:00:13.400 [http-nio-8080-exec-1] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 15:41:53.884 [http-nio-8080-exec-3] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 15:41:53.884 [http-nio-8080-exec-3] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 15:41:53.888 [http-nio-8080-exec-3] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 15:41:53.888 [http-nio-8080-exec-3] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 15:41:53.888 [http-nio-8080-exec-3] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 15:41:53.890 [http-nio-8080-exec-3] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 15:55:27.849 [http-nio-8080-exec-5] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 15:55:27.849 [http-nio-8080-exec-5] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 15:55:27.852 [http-nio-8080-exec-5] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 15:55:27.852 [http-nio-8080-exec-5] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 15:55:27.852 [http-nio-8080-exec-5] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 15:55:27.854 [http-nio-8080-exec-5] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 15:59:09.021 [http-nio-8080-exec-7] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 15:59:09.021 [http-nio-8080-exec-7] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 15:59:09.023 [http-nio-8080-exec-7] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 15:59:09.023 [http-nio-8080-exec-7] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 15:59:09.023 [http-nio-8080-exec-7] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 15:59:09.030 [http-nio-8080-exec-7] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 16:36:01.551 [http-nio-8080-exec-9] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 16:36:01.551 [http-nio-8080-exec-9] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 16:36:01.555 [http-nio-8080-exec-9] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 16:36:01.556 [http-nio-8080-exec-9] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 16:36:01.556 [http-nio-8080-exec-9] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 16:36:01.558 [http-nio-8080-exec-9] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 16:36:04.023 [http-nio-8080-exec-10] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 16:36:04.024 [http-nio-8080-exec-10] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 16:36:04.027 [http-nio-8080-exec-10] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 16:36:04.027 [http-nio-8080-exec-10] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 16:36:04.027 [http-nio-8080-exec-10] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 16:36:04.029 [http-nio-8080-exec-10] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 16:36:05.546 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 16:36:05.547 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 16:36:05.550 [http-nio-8080-exec-1] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 16:36:05.551 [http-nio-8080-exec-1] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 16:36:05.551 [http-nio-8080-exec-1] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 16:36:05.553 [http-nio-8080-exec-1] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 16:36:06.517 [http-nio-8080-exec-2] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 16:36:06.517 [http-nio-8080-exec-2] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 16:36:06.519 [http-nio-8080-exec-2] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 16:36:06.520 [http-nio-8080-exec-2] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 16:36:06.520 [http-nio-8080-exec-2] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 16:36:06.521 [http-nio-8080-exec-2] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 16:38:50.597 [http-nio-8080-exec-4] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 16:38:50.597 [http-nio-8080-exec-4] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 16:38:50.600 [http-nio-8080-exec-4] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 16:38:50.600 [http-nio-8080-exec-4] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 16:38:50.600 [http-nio-8080-exec-4] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 16:38:50.602 [http-nio-8080-exec-4] findAll : <==      Total: 3
+[DEBUG] 2022-11-07 16:38:53.604 [http-nio-8080-exec-5] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 16:38:53.604 [http-nio-8080-exec-5] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 16:38:53.606 [http-nio-8080-exec-5] LoginService : Retrieving users from database.
+[DEBUG] 2022-11-07 16:38:53.607 [http-nio-8080-exec-5] findAll : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL
+[DEBUG] 2022-11-07 16:38:53.607 [http-nio-8080-exec-5] findAll : ==> Parameters: 
+[DEBUG] 2022-11-07 16:38:53.609 [http-nio-8080-exec-5] findAll : <==      Total: 3
+[INFO ] 2022-11-07 16:49:38.784 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 14508 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 16:49:38.788 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 16:49:38.789 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 16:49:44.910 [main] LoginApplication : Started LoginApplication in 7.552 seconds (JVM running for 8.359)
+[DEBUG] 2022-11-07 16:51:08.761 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 16:51:08.762 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[DEBUG] 2022-11-07 16:51:08.820 [http-nio-8080-exec-1] findByEmail : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL WHERE u.EMAIL = ?
+[DEBUG] 2022-11-07 16:51:08.918 [http-nio-8080-exec-1] findByEmail : ==> Parameters: testing@gmail.com(String)
+[DEBUG] 2022-11-07 16:51:08.990 [http-nio-8080-exec-1] findByEmail : <==      Total: 1
+[INFO ] 2022-11-07 16:52:18.340 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 13804 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 16:52:18.346 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 16:52:18.347 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 16:52:24.837 [main] LoginApplication : Started LoginApplication in 7.957 seconds (JVM running for 8.814)
+[INFO ] 2022-11-07 16:54:45.454 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 20372 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 16:54:45.459 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 16:54:45.460 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 16:56:31.314 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 21920 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 16:56:31.320 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 16:56:31.321 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 16:56:59.240 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 25960 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 16:56:59.245 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 16:56:59.246 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 16:58:47.263 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 30076 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 16:58:47.269 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 16:58:47.270 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:07:20.882 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 2632 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:07:20.887 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:07:20.888 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:10:28.118 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 25688 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:10:28.122 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:10:28.123 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:14:16.756 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 18004 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:14:16.761 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:14:16.762 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:18:42.881 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 29072 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:18:42.888 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:18:42.889 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:20:36.363 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 26548 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:20:36.369 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:20:36.370 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:22:01.141 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 25552 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:22:01.146 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:22:01.146 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:22:51.146 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 17016 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:22:51.152 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:22:51.152 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:25:09.001 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 29792 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:25:09.007 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:25:09.008 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:27:28.692 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 26276 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:27:28.698 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:27:28.699 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:32:52.619 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 27396 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:32:52.625 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:32:52.626 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:33:17.153 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 23360 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:33:17.159 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:33:17.160 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:36:40.215 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 29280 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:36:40.220 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:36:40.220 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:44:25.611 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 28800 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:44:25.616 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:44:25.617 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:45:08.147 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 29424 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:45:08.152 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:45:08.152 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:46:52.065 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 18216 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:46:52.071 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:46:52.071 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:47:09.592 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 26328 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:47:09.598 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:47:09.598 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:49:37.782 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 17448 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:49:37.787 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:49:37.788 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:51:05.748 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 26880 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:51:05.754 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:51:05.755 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:51:11.959 [main] LoginApplication : Started LoginApplication in 7.638 seconds (JVM running for 8.509)
+[DEBUG] 2022-11-07 17:51:18.006 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 17:51:18.006 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[INFO ] 2022-11-07 17:51:18.042 [http-nio-8080-exec-1] ServiceAspect : Before : testing@gmail.com logging in.
+[DEBUG] 2022-11-07 17:51:18.068 [http-nio-8080-exec-1] findByEmail : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL WHERE u.EMAIL = ?
+[DEBUG] 2022-11-07 17:51:18.142 [http-nio-8080-exec-1] findByEmail : ==> Parameters: testing@gmail.com(String)
+[DEBUG] 2022-11-07 17:51:18.190 [http-nio-8080-exec-1] findByEmail : <==      Total: 1
+[INFO ] 2022-11-07 17:51:18.191 [http-nio-8080-exec-1] ServiceAspect : After : user.getEmail() logged in.
+[INFO ] 2022-11-07 17:52:11.350 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 21744 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 17:52:11.357 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 17:52:11.358 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 17:52:17.532 [main] LoginApplication : Started LoginApplication in 7.619 seconds (JVM running for 8.44)
+[DEBUG] 2022-11-07 17:53:33.088 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 17:53:33.088 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[INFO ] 2022-11-07 17:53:33.121 [http-nio-8080-exec-1] ServiceAspect : Before : testing@gmail.com logging in.
+[DEBUG] 2022-11-07 17:53:33.144 [http-nio-8080-exec-1] findByEmail : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL WHERE u.EMAIL = ?
+[DEBUG] 2022-11-07 17:53:33.224 [http-nio-8080-exec-1] findByEmail : ==> Parameters: testing@gmail.com(String)
+[DEBUG] 2022-11-07 17:53:33.272 [http-nio-8080-exec-1] findByEmail : <==      Total: 1
+[INFO ] 2022-11-07 17:53:33.274 [http-nio-8080-exec-1] ServiceAspect : After : testing@gmail.com logged in.
+[INFO ] 2022-11-07 18:17:47.303 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 21092 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 18:17:47.309 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 18:17:47.310 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 18:17:53.782 [main] LoginApplication : Started LoginApplication in 7.907 seconds (JVM running for 9.442)
+[DEBUG] 2022-11-07 18:17:57.569 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 18:17:57.570 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[INFO ] 2022-11-07 18:17:57.603 [http-nio-8080-exec-1] ServiceAspect : Before : testing@gmail.com logging in.
+[DEBUG] 2022-11-07 18:17:57.630 [http-nio-8080-exec-1] findByEmail : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL WHERE u.EMAIL = ?
+[DEBUG] 2022-11-07 18:17:57.705 [http-nio-8080-exec-1] findByEmail : ==> Parameters: testing@gmail.com(String)
+[DEBUG] 2022-11-07 18:17:57.751 [http-nio-8080-exec-1] findByEmail : <==      Total: 1
+[INFO ] 2022-11-07 18:17:57.752 [http-nio-8080-exec-1] ServiceAspect : After : testing@gmail.com logged in.

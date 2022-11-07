@@ -21,7 +21,7 @@ mybatis:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8082/eureka
+      defaultZone: http://localhost:8082/eureka/eureka
   instance:
     prefer-ip-address: true
     lease-renewal-interval-in-seconds: 30

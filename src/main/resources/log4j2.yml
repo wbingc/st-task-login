@@ -1,3 +1,5 @@
+#https://springframework.guru/log4j-2-configuration-using-yaml/
+
 Properties:
   Property:
     name: log-path
@@ -11,18 +13,19 @@ Appenders:
       pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} : %msg%n"
   File:
     name: File_Appender
-    fileName: C:\Users\stackdev\Downloads\Login\Login\src\main\resources\logfile.log
+    #fileName: C:\Users\stackdev\Downloads\Login\Login\src\main\resources\logfile.log
+    fileName: logs\logfile.log
     PatternLayout:
       pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} : %msg%n"
   RollingFile:
     name: Rolling_File_Appender
-    fileName: C:\Users\stackdev\Downloads\Login\Login\src\main\resources\rollingfile.log
-    filePattern: "rollingfile.log.%d{yyyy-MM-dd-hh-mm}.gz"
+    fileName: logs\rolling-file.log
+    filePattern: "rolling-file.log.%d{yyyy-MM-dd-hh-mm}.gz"
     PatternLayout:
       pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} : %msg%n"
     Policies:
       SizeBasedTriggeringPolicy:
-        size: 10MB
+        size: 2MB
 
 Loggers:
   Root:
