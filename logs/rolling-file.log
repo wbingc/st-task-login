@@ -184,3 +184,14 @@
 [DEBUG] 2022-11-07 18:17:57.705 [http-nio-8080-exec-1] findByEmail : ==> Parameters: testing@gmail.com(String)
 [DEBUG] 2022-11-07 18:17:57.751 [http-nio-8080-exec-1] findByEmail : <==      Total: 1
 [INFO ] 2022-11-07 18:17:57.752 [http-nio-8080-exec-1] ServiceAspect : After : testing@gmail.com logged in.
+[INFO ] 2022-11-07 18:20:20.999 [main] LoginApplication : Starting LoginApplication using Java 19.0.1 on LAPTOP-CE00011 with PID 24772 (C:\Users\stackdev\Downloads\Login\Login\target\classes started by stackdev in C:\Users\stackdev\Downloads\Login\Login)
+[DEBUG] 2022-11-07 18:20:21.005 [main] LoginApplication : Running with Spring Boot v2.7.3, Spring v5.3.22
+[INFO ] 2022-11-07 18:20:21.005 [main] LoginApplication : No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2022-11-07 18:20:27.236 [main] LoginApplication : Started LoginApplication in 7.672 seconds (JVM running for 8.48)
+[DEBUG] 2022-11-07 18:20:34.374 [http-nio-8080-exec-1] SessionAuthenticationService : In progress for authentication.
+[DEBUG] 2022-11-07 18:20:34.374 [http-nio-8080-exec-1] SessionAuthenticationService : What's in my header : null
+[INFO ] 2022-11-07 18:20:34.408 [http-nio-8080-exec-1] ServiceAspect : Before login : testing@gmail.com logging in.
+[DEBUG] 2022-11-07 18:20:34.436 [http-nio-8080-exec-1] findByEmail : ==>  Preparing: SELECT u.ID, u.EMAIL, u.NAME, u.PASSWORD, u.STATUS, u.TOKEN, w.BALANCE FROM USERS u JOIN WALLET w ON u.EMAIL = w.EMAIL WHERE u.EMAIL = ?
+[DEBUG] 2022-11-07 18:20:34.510 [http-nio-8080-exec-1] findByEmail : ==> Parameters: testing@gmail.com(String)
+[DEBUG] 2022-11-07 18:20:34.562 [http-nio-8080-exec-1] findByEmail : <==      Total: 1
+[INFO ] 2022-11-07 18:20:34.564 [http-nio-8080-exec-1] ServiceAspect : After Returning login : testing@gmail.com logged in.
